@@ -1,4 +1,4 @@
-package csse432MUDServer;
+package classStructure;
 
 import java.util.ArrayList;
 

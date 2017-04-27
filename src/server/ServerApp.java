@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import Utility.Protocol;
+import utility.Protocol;
 
 
 /*

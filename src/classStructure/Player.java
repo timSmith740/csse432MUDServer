@@ -1,4 +1,4 @@
-package csse432MUDServer;
+package classStructure;
 
 public class Player extends Character {
 	int str, dex, con, intel;
