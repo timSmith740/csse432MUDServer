@@ -30,4 +30,8 @@ public class Player extends Character {
 				intel = val;
 		}
 	}
+	
+	void deleteInventory(){
+		Inventory.clear();
+	}
 }
