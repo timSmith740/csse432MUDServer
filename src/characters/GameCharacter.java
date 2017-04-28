@@ -1,9 +1,16 @@
 package characters;
 
+import java.util.List;
+
+import items.Equipment;
+import items.Weapon;
+
 public abstract class GameCharacter extends GameObject{
 	private int respawnTime;
 	private int respawnX;
 	private int respawnY;
+	private List<Weapon> weapons;
+	private List<Equipment> equipment;
 	
 	int str, dex, con, intel;
 	

@@ -2,7 +2,7 @@ package characters;
 
 public class Player extends GameCharacter {
 	
-	void deleteInventory(){
+	public void deleteInventory(){
 		Inventory.clear();
 	}
 }
