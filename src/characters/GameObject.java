@@ -1,4 +1,4 @@
-package classStructure;
+package characters;
 
 public abstract class GameObject {
 

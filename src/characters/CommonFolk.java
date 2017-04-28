@@ -1,4 +1,4 @@
-package classStructure;
+package characters;
 import java.util.List;
 
 public class CommonFolk extends NPC {

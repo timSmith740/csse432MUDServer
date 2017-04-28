@@ -1,4 +1,4 @@
-package classStructure;
+package characters;
 
 public class Player extends Character {
 	int str, dex, con, intel;
