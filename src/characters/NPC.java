@@ -1,5 +1,5 @@
 package characters;
 
-public abstract class NPC extends Character {
+public abstract class NPC extends GameCharacter {
 	private int maxDistance;
 }
