@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import Client.ClientProtocol;
 
 
 
@@ -49,7 +48,7 @@ public class ClientHandler implements Runnable {
 				}
 				String command = builder.toString();
 				//Process Command in Command Handler
-				String result = ClientProtocol.CommandHandler(command);
+				String result = ServerProtocol.CommandHandler(command);
 				
 				//Close Connection if necassary
 				if(result.equals("quit")){
