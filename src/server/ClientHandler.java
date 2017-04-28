@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,9 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import utility.Protocol;
+import Client.ClientProtocol;
+
+
 
 
 /*
@@ -47,13 +49,14 @@ public class ClientHandler implements Runnable {
 				}
 				String command = builder.toString();
 				//Process Command in Command Handler
-				String result = Protocol.CommandHandler(command);
+				String result = ClientProtocol.CommandHandler(command);
 				
 				//Close Connection if necassary
 				if(result.equals("quit")){
 					System.out.println("Closing Connection To: "+ mySocket.getRemoteSocketAddress());
 					try{
 						mySocket.close();
+						break;
 					}catch(Exception e){
 						e.printStackTrace();
 					}
