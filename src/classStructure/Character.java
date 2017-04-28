@@ -2,7 +2,7 @@ package classStructure;
 
 import java.util.ArrayList;
 
-public abstract class Character {
+public abstract class Character extends GameObject{
 	private int respawnTime;
 	private int respawnX;
 	private int respawnY;
