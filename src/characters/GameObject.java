@@ -2,20 +2,20 @@ package characters;
 
 import java.util.ArrayList;
 
-import items.items;
+import items.Item;
 
 public abstract class GameObject {
-	ArrayList<items> Inventory = new ArrayList<items>();
+	ArrayList<Item> Inventory = new ArrayList<Item>();
 	
-	public ArrayList<items> getInventory(){
+	public ArrayList<Item> getInventory(){
 		return this.Inventory;
 	}
 	
-	public void addToInventory(items item){
+	public void addToInventory(Item item){
 		this.Inventory.add(item);
 	}
 	
-	public void removeFromInventory(items item){
+	public void removeFromInventory(Item item){
 		this.Inventory.remove(item);
 	}
 }
