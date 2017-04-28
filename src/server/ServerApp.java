@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
-
-import utility.Protocol;
 
 
 /*
@@ -22,7 +20,7 @@ public class ServerApp {
 		// TODO Auto-generated method stub
 		System.out.println("Sever Running");
 		
-		Server myServer = new Server(Protocol.DEFAULT_PORT);
+		Server myServer = new Server(ServerProtocol.DEFAULT_PORT);
 		
 		myServer.execute();
 			
