@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.io.InputStream;
 
+import characters.Player;
+
 
 /*
  * Joseph Militello
@@ -36,7 +38,7 @@ public class ServerProtocol {
 	}
 	
 	//parse commands
-	public static String CommandHandler(String command){
+	public static String CommandHandler(String command, Player player){
 		
 		String[] subparts=command.split(" ");
 		switch(subparts[0].toLowerCase()){

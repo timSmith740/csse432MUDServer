@@ -1,12 +1,11 @@
 package server;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
+import characters.Player;
 
 
 
@@ -23,45 +22,47 @@ public class ClientHandler implements Runnable {
 	Socket mySocket;
 	OutputStream out;
 	InputStream in;
+	Player player;
 	
 	public ClientHandler(Server theServer, Socket theSocket) throws IOException{
 		this.myServer=theServer;
 		this.mySocket= theSocket;
-		in = mySocket.getInputStream();
-		out =mySocket.getOutputStream();
+		this.in = this.mySocket.getInputStream();
+		this.out =this.mySocket.getOutputStream();
+		this.player = new Player();
 	
 	}
 	
 	@Override
 	public void run() {
 		//State that is is connected
-		System.out.println("Connected to: "+ mySocket.getRemoteSocketAddress());
+		System.out.println("Connected to: "+ this.mySocket.getRemoteSocketAddress());
 		
 		//Recieve a command 
 		while(true){
 			try {
-				int c = in.read();
+				int c = this.in.read();
 				StringBuilder builder = new StringBuilder();
 				while(c!='\n'&& c!=-1){
 					builder.append((char)c);
-					c = in.read();
+					c = this.in.read();
 				}
 				String command = builder.toString();
 				//Process Command in Command Handler
-				String result = ServerProtocol.CommandHandler(command);
+				String result = ServerProtocol.CommandHandler(command, this.player);
 				
 				//Close Connection if necassary
 				if(result.equals("quit")){
-					System.out.println("Closing Connection To: "+ mySocket.getRemoteSocketAddress());
+					System.out.println("Closing Connection To: "+ this.mySocket.getRemoteSocketAddress());
 					try{
-						mySocket.close();
+						this.mySocket.close();
 						break;
 					}catch(Exception e){
 						e.printStackTrace();
 					}
 				}
 				
-				out.write(result.getBytes());
+				this.out.write(result.getBytes());
 		
 			} catch (IOException e) {
 				e.printStackTrace();
