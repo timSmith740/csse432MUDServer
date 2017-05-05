@@ -1,12 +1,19 @@
 package server;
 
 
+import java.awt.Point;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import characters.Player;
+import characters.GameCharacter;
+import fileHandlers.worldLoader;
+import gameMap.GameMap;
+import worldObjects.WorldObject;
 
 
 /*
@@ -18,9 +25,15 @@ import java.util.List;
 public class Server {
 	int Port;
 	private ServerSocket mySocket;
+	GameMap theWorld;
+	
 	
 	public Server(int Port){
 		this.Port=Port;
+		//Load world
+		worldLoader loader = new worldLoader();
+		WorldObject[][] theWorld = loader.readFile();
+		this.theWorld = new GameMap(theWorld);
 	}
 	
 	public void execute(){
@@ -34,9 +47,13 @@ public class Server {
 		}
 		while(true){
 			//When new client connects, add new client handler
+			
+			
+		
+			
 			try {
 				Socket client = this.mySocket.accept();
-				ClientHandler myHandler = new ClientHandler(this, client);
+				ClientHandler myHandler = new ClientHandler(this, client,this.theWorld);
 				Thread runner = new Thread(myHandler);
 				runner.start();
 			} catch (IOException e) {

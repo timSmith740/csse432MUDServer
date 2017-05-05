@@ -27,5 +27,14 @@ public abstract class GameObject {
 	public Point getLocation(){
 		return this.location;
 	}
+	
+	public void setLocation(Point location){
+		if(this.location!=null){
+			this.location.move(location.x, location.y);
+		}else{
+			this.location=new Point(location.x, location.y);
+		}
+	}
+	
 }
  

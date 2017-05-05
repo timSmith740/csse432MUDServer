@@ -16,24 +16,32 @@ public class worldLoader {
 			String lineRead = br.readLine();
 			int x = 0, y = 0;
 			while (lineRead != null){
-				System.out.println(lineRead);
+				//System.out.println(lineRead);
 				for (y = 0; y < lineRead.length(); y++){
 					char c = lineRead.charAt(y);
+					System.out.print(c);
 					switch (c){
 					case 'W':
-						map[x][y] = new WorldObject();
+						map[x][y] = new WorldObject(false);
+						break;
 					case 'F':
-						map[x][y] = new WorldObject();
+						map[x][y] = new WorldObject(true);
+						break;
 					case 'D':
 						map[x][y] = new Obstacle();
+						break;
 					case ' ':
-						map[x][y] = new WorldObject();
+						map[x][y] = new WorldObject(false); //Can change
+						break;
 					case 'G':
 						map[x][y] = new Obstacle();
+						break;
 					default:
-						map[x][y] = new WorldObject();
+						map[x][y] = new WorldObject(false);
+						break;
 					}
 				}
+				System.out.println();
 				lineRead = br.readLine();
 				x++;
 			}

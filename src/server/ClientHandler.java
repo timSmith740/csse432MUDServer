@@ -1,11 +1,15 @@
 package server;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
 import characters.Player;
+import fileHandlers.worldLoader;
+import gameMap.GameMap;
+import worldObjects.WorldObject;
 
 
 
@@ -23,13 +27,20 @@ public class ClientHandler implements Runnable {
 	OutputStream out;
 	InputStream in;
 	Player player;
+	GameMap theWorld;
 	
-	public ClientHandler(Server theServer, Socket theSocket) throws IOException{
+	public ClientHandler(Server theServer, Socket theSocket,GameMap theWorld) throws IOException{
 		this.myServer=theServer;
 		this.mySocket= theSocket;
 		this.in = this.mySocket.getInputStream();
 		this.out =this.mySocket.getOutputStream();
 		this.player = new Player();
+		this.theWorld= theWorld;
+		
+		//Temporarly 
+		Point startingPoint = new Point(2,2);
+		this.theWorld.AddGameObjectAtLocation(player, startingPoint);
+		
 	
 	}
 	
@@ -49,7 +60,7 @@ public class ClientHandler implements Runnable {
 				}
 				String command = builder.toString();
 				//Process Command in Command Handler
-				String result = ServerProtocol.CommandHandler(command, this.player);
+				String result = ServerProtocol.CommandHandler(command, this.player,this.theWorld);
 				
 				//Close Connection if necassary
 				if(result.equals("quit")){

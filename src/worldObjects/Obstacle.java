@@ -7,6 +7,16 @@ import items.Item;
 
 /*temporay change to nonabstract*/
 public class Obstacle extends WorldObject {
+	
+	
+	public Obstacle(boolean passable) {
+		super(passable);
+	}
+	
+	public Obstacle(){
+		super(false);
+	}
+
 	private List<Item> keys;
 	
 	public boolean isKey(Item item){

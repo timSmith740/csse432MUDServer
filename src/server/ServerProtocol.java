@@ -1,9 +1,13 @@
 package server;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.io.InputStream;
 
+import characters.GameCharacter;
 import characters.Player;
+import gameMap.GameMap;
+import server.ServerProtocol.Direction;
 
 
 /*
@@ -17,9 +21,11 @@ public class ServerProtocol {
 
 	public static int DEFAULT_PORT = 5555;
 	public static String SERVER_INFO = "localhost";
-
-
 	public static final String INVALID_SYNTAX="Incorrect Syntax";
+	
+	public enum Direction{
+		North, South, East, West
+	}
 	
 	//To recieve a file
 	public static byte[] recieve(InputStream in) throws IOException{
@@ -38,7 +44,7 @@ public class ServerProtocol {
 	}
 	
 	//parse commands
-	public static String CommandHandler(String command, Player player){
+	public static String CommandHandler(String command, Player player,GameMap map){
 		
 		String[] subparts=command.split(" ");
 		switch(subparts[0].toLowerCase()){
@@ -52,12 +58,61 @@ public class ServerProtocol {
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
 			
+		
+			
 		case "run":
 			if(subparts.length==2){
 			String sendback = "run:"+subparts[1];
 			return(sendback);
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
+			
+
+			
+		case "move":
+			String sendback = "Cannot Move to that position";
+			if(subparts.length==3||subparts.length==2){
+				String dirCommand = subparts[1].toLowerCase();
+				Direction dir;
+				switch(dirCommand){
+					case "north": 
+						dir=Direction.North;
+						break;
+					case "south":
+						dir=Direction.South;	
+						break;
+					case "west":
+						dir=Direction.West;
+						break;
+					case "east":
+						dir = Direction.East;
+						break;
+					default:
+						return(ServerProtocol.INVALID_SYNTAX);
+				}
+				
+				int distance;
+				if(subparts.length==3){
+					distance = Integer.parseInt(subparts[2]);
+				}else{
+					distance = 1;
+				}
+				
+				boolean sucessfull = map.moveByDistance(player,  dir,distance);
+				if(sucessfull){
+					sendback = "Your character has moved to that position";
+				}else{
+					sendback = "Cannot Move to that position";
+				}
+				return(sendback);
+			}
+			return(ServerProtocol.INVALID_SYNTAX);
+		
+		case "status":
+			Point spot = player.getLocation();
+			sendback = "The character is at cordinates:"+spot.x+" "+spot.y;
+			return (sendback);
+			
 			
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
