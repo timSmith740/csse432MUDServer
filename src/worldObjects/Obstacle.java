@@ -5,7 +5,8 @@ import java.util.List;
 import characters.GameCharacter;
 import items.Item;
 
-public abstract class Obstacle extends WorldObject {
+/*temporay change to nonabstract*/
+public class Obstacle extends WorldObject {
 	private List<Item> keys;
 	
 	public boolean isKey(Item item){
