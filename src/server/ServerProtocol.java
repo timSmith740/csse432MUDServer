@@ -67,7 +67,7 @@ public class ServerProtocol {
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
 			
-
+		
 			
 		case "move":
 			String sendback = "Cannot Move to that position";
@@ -112,6 +112,13 @@ public class ServerProtocol {
 			Point spot = player.getLocation();
 			sendback = "The character is at cordinates:"+spot.x+" "+spot.y;
 			return (sendback);
+			
+		case "update":
+			String update=  player.characterStats()+"@"+player.getInvString()+"@"+player.getEquString()+"@Stats returned";
+			return update;
+		
+		case "health":
+			return player.getHealth()+"@HealthReturned";
 			
 			
 		default:

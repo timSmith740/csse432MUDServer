@@ -12,6 +12,9 @@ public abstract class GameObject {
 	Point location;
 	ArrayList<Item> Inventory = new ArrayList<Item>();
 	
+	//Joe  
+	ArrayList<Item> Equiped = new ArrayList<Item>();
+	
 	public ArrayList<Item> getInventory(){
 		return this.Inventory;
 	}
@@ -36,5 +39,22 @@ public abstract class GameObject {
 		}
 	}
 	
+	//Joe Method
+	public String getInvString(){
+		String result = "";
+		for(int counter=0; counter<this.Inventory.size(); counter++){
+			result = this.Inventory.get(counter)+ "\n";
+		}
+		return result;
+	}
+	
+	//Joe Method
+	public String getEquString(){
+		String result = "";
+		for(int counter=0; counter<this.Equiped.size(); counter++){
+			result = this.Equiped.get(counter)+ "\n";
+		}
+		return result;
+	}
 }
  

@@ -9,6 +9,8 @@ public abstract class GameCharacter extends GameObject{
 	private List<Weapon> weapons;
 	private List<Equipment> equipment;
 	
+	
+	
 	int str, dex, con, intel;
 	
 	int getStat(String stat){
@@ -37,5 +39,17 @@ public abstract class GameCharacter extends GameObject{
 			case "intel":
 				intel = val;
 		}
+	}
+	
+	//Joe Method
+	public String characterStats(){
+		//1 ,2 ,3, 4 is a filler for missing stat
+		//health health/health ac armor strength con int dex
+		return "&S:"+1+":"+2+":"+3+":"+4 +":"+str+":"+con+":"+intel+":"+dex;
+	}
+	
+	//Joe Method
+	public String getHealth(){
+		return "&H:"+5+":"+6;
 	}
 }
