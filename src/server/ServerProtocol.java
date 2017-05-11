@@ -146,7 +146,7 @@ public class ServerProtocol {
 		if (!pass.equals(accounts.get(user))){
 			return("Wrong password. Please try again");
 		}
-		System.out.println("test");
+		
 		return("Logged on");
 	}
 	
