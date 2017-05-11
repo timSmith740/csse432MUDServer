@@ -8,6 +8,7 @@ import items.Item;
 public abstract class GameObject {
 
 	int respawnTime;
+	String name;
 	Point respawnLocation;
 	Point location;
 	ArrayList<Item> Inventory = new ArrayList<Item>();

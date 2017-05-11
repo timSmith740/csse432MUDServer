@@ -3,6 +3,8 @@ package server;
 import java.awt.Point;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import characters.GameCharacter;
 import characters.Player;
@@ -125,6 +127,27 @@ public class ServerProtocol {
 			return(ServerProtocol.INVALID_SYNTAX);
 		}
 		
+	}
+	
+	public static String logInHandler(String command, ArrayList<Account> users, HashMap<String, String> accounts){
+		String[] subparts = command.split(" ");
+		
+		//Wrong command
+		if (subparts.length != 3){
+			return(ServerProtocol.INVALID_SYNTAX);
+		}
+		String user = subparts[1];
+		String pass = subparts[2];
+		
+		if (!accounts.containsKey(user)){
+			return("No account. Please make an account");
+		}
+		
+		if (!pass.equals(accounts.get(user))){
+			return("Wrong password. Please try again");
+		}
+		System.out.println("test");
+		return("Logged on");
 	}
 	
 	

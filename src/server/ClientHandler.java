@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import characters.Player;
 import fileHandlers.worldLoader;
@@ -28,14 +30,20 @@ public class ClientHandler implements Runnable {
 	InputStream in;
 	Player player;
 	GameMap theWorld;
+	Boolean loggedIn;
+	ArrayList<Account> users;
+	HashMap<String, String> accounts;
 	
-	public ClientHandler(Server theServer, Socket theSocket,GameMap theWorld) throws IOException{
+	public ClientHandler(Server theServer, Socket theSocket,GameMap theWorld, ArrayList<Account> theUsers, HashMap<String, String> theAccounts) throws IOException{
 		this.myServer=theServer;
 		this.mySocket= theSocket;
 		this.in = this.mySocket.getInputStream();
 		this.out =this.mySocket.getOutputStream();
 		this.player = new Player();
 		this.theWorld= theWorld;
+		this.loggedIn = false;
+		this.users = theUsers;
+		this.accounts = theAccounts;
 		
 		//Temporarly 
 		Point startingPoint = new Point(2,2);
@@ -51,7 +59,7 @@ public class ClientHandler implements Runnable {
 		
 		//Recieve a command 
 		while(true){
-			try {
+			command: try {
 				int c = this.in.read();
 				StringBuilder builder = new StringBuilder();
 				while(c!='\n'&& c!=-1){
@@ -59,10 +67,18 @@ public class ClientHandler implements Runnable {
 					c = this.in.read();
 				}
 				String command = builder.toString();
+				if (this.loggedIn == false){
+					String result = ServerProtocol.logInHandler(command, this.users, this.accounts);
+					if (result.equals("Logged on")){
+						this.loggedIn = true;
+					}
+					this.out.write(result.getBytes());
+					break command;
+				}
 				//Process Command in Command Handler
 				String result = ServerProtocol.CommandHandler(command, this.player,this.theWorld);
 				
-				//Close Connection if necassary
+				//Close Connection if necessary
 				if(result.equals("quit")){
 					System.out.println("Closing Connection To: "+ this.mySocket.getRemoteSocketAddress());
 					try{

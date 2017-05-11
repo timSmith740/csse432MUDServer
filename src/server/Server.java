@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import characters.Player;
@@ -26,6 +27,8 @@ public class Server {
 	int Port;
 	private ServerSocket mySocket;
 	GameMap theWorld;
+	ArrayList<Account> users;
+	HashMap<String, String> accounts;
 	
 	
 	public Server(int Port){
@@ -34,6 +37,11 @@ public class Server {
 		worldLoader loader = new worldLoader();
 		WorldObject[][] theWorld = loader.readFile();
 		this.theWorld = new GameMap(theWorld);
+		Account test = new Account("tester", "test");
+		this.users = new ArrayList<Account>();
+		this.users.add(test);
+		this.accounts = new HashMap<String, String>();
+		this.accounts.put("tester", "test");
 	}
 	
 	public void execute(){
@@ -48,12 +56,9 @@ public class Server {
 		while(true){
 			//When new client connects, add new client handler
 			
-			
-		
-			
 			try {
 				Socket client = this.mySocket.accept();
-				ClientHandler myHandler = new ClientHandler(this, client,this.theWorld);
+				ClientHandler myHandler = new ClientHandler(this, client,this.theWorld, this.users, this.accounts);
 				Thread runner = new Thread(myHandler);
 				runner.start();
 			} catch (IOException e) {
