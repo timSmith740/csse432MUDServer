@@ -26,7 +26,7 @@ public class ServerProtocol {
 
 	public static int DEFAULT_PORT = 5555;
 	public static String SERVER_INFO = "localhost";
-	public static final String INVALID_SYNTAX="Incorrect Syntax";
+	public static final String INVALID_SYNTAX="Incorrect Syntax\n";
 	
 	public enum Direction{
 		North, South, East, West
@@ -54,11 +54,11 @@ public class ServerProtocol {
 		String[] subparts=command.split(" ");
 		switch(subparts[0].toLowerCase()){
 		case "quit":
-			return "quit";
+			return "quit\n";
 					
 		case "attack":
 			if(subparts.length==2){
-			String sendback = "attack:"+subparts[1];
+			String sendback = "attack:"+subparts[1] +"\n";
 			return(sendback);
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
@@ -67,7 +67,7 @@ public class ServerProtocol {
 			
 		case "run":
 			if(subparts.length==2){
-			String sendback = "run:"+subparts[1];
+			String sendback = "run:"+subparts[1] +"\n";
 			return(sendback);
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
@@ -105,9 +105,9 @@ public class ServerProtocol {
 				
 				boolean sucessfull = map.moveByDistance(player,  dir,distance);
 				if(sucessfull){
-					sendback = "Your character has moved to that position";
+					sendback = "Your character has moved to that position\n";
 				}else{
-					sendback = "Cannot Move to that position";
+					sendback = "Cannot Move to that position\n";
 				}
 				System.out.println(player.getLocation());
 				return(sendback);
@@ -116,23 +116,23 @@ public class ServerProtocol {
 		
 		case "status":
 			Point spot = player.getLocation();
-			sendback = "The character is at cordinates:"+spot.x+" "+spot.y;
+			sendback = "The character is at cordinates:"+spot.x+" "+spot.y +"\n";
 			return (sendback);
 			
 		case "update":
-			String update=  player.characterStats()+"@"+player.getInvString()+"@"+player.getEquString()+"@Stats returned";
+			String update=  player.characterStats()+"@"+player.getInvString()+"@"+player.getEquString()+"@Stats returned\n";
 			return update;
 		
 		case "health":
-			return player.getHealth()+"@HealthReturned";
+			return player.getHealth()+"@HealthReturned\n";
 			
 		case "check":
 			if (subparts.length == 2){
 				int position = Integer.parseInt(subparts[1]) - 1;
 				List<GameObject> objects = map.checkForObjects(player);
-				return objects.get(position).getInventory().toString();
+				return objects.get(position).getInventory().toString() +"\n";
 			} else{
-				return map.checkForObjects(player).toString();
+				return map.checkForObjects(player).toString() +"\n";
 			}
 			
 		case "take":
@@ -142,14 +142,14 @@ public class ServerProtocol {
 			Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
 			objects.get(containerPosition).removeFromInventory(chosenItem);
 			player.addToInventory(chosenItem);
-			return chosenItem.toString()+" added to Inventory";
+			return chosenItem.toString()+" added to Inventory\n";
 			
 		case "equip":
 			itemPosition = Integer.parseInt(subparts[1]) - 1;
 			chosenItem = player.getInventory().get(itemPosition);
 			player.addToEquipment(chosenItem);
 			player.removeFromInventory(chosenItem);
-			return chosenItem.toString()+" added to Equipment";
+			return chosenItem.toString()+" added to Equipment\n";
 			
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
@@ -169,14 +169,14 @@ public class ServerProtocol {
 		switch(subparts[0].toLowerCase()){
 		case "login":
 			if (!accounts.containsKey(user)){
-				return("No account. Please make an account");
+				return("No account. Please make an account\n");
 			}
 			
 			if (!pass.equals(accounts.get(user))){
-				return("Wrong password. Please try again");
+				return("Wrong password. Please try again\n");
 			}
 			
-			return("Logged on");
+			return("Logged on\n");
 		case "register":
 			
 		default:
