@@ -140,6 +140,7 @@ public class ServerProtocol {
 			int itemPosition = Integer.parseInt(subparts[1]) - 1;
 			List<GameObject> objects = map.checkForObjects(player);
 			Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
+			objects.get(containerPosition).removeFromInventory(chosenItem);
 			player.addToInventory(chosenItem);
 			return chosenItem.toString()+" added to Inventory";
 			
