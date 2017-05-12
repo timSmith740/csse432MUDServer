@@ -11,9 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import characters.Player;
+import characters.Container;
 import characters.GameCharacter;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
+import items.Weapon;
 import worldObjects.WorldObject;
 
 
@@ -42,6 +44,10 @@ public class Server {
 		this.users.add(test);
 		this.accounts = new HashMap<String, String>();
 		this.accounts.put("tester", "test");
+		Container chest = new Container();
+		Weapon sword = new Weapon(2);
+		chest.addToInventory(sword);
+		this.theWorld.AddGameObjectAtLocation(chest, new Point(3,2));
 	}
 	
 	public void execute(){

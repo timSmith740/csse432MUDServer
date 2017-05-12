@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import characters.GameCharacter;
+import characters.GameObject;
 import characters.Player;
 import gameMap.GameMap;
+import items.Item;
 import server.ServerProtocol.Direction;
 
 
@@ -106,6 +109,7 @@ public class ServerProtocol {
 				}else{
 					sendback = "Cannot Move to that position";
 				}
+				System.out.println(player.getLocation());
 				return(sendback);
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
@@ -122,6 +126,22 @@ public class ServerProtocol {
 		case "health":
 			return player.getHealth()+"@HealthReturned";
 			
+		case "check":
+			if (subparts.length == 2){
+				int position = Integer.parseInt(subparts[1]) - 1;
+				List<GameObject> objects = map.checkForObjects(player);
+				return objects.get(position).getInventory().toString();
+			} else{
+				return map.checkForObjects(player).toString();
+			}
+			
+		case "take":
+			int containerPosition = Integer.parseInt(subparts[1]) - 1;
+			int itemPosition = Integer.parseInt(subparts[1]) - 1;
+			List<GameObject> objects = map.checkForObjects(player);
+			Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
+			player.addToInventory(chosenItem);
+			return chosenItem.toString()+" added to Inventory";
 			
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
@@ -138,16 +158,23 @@ public class ServerProtocol {
 		}
 		String user = subparts[1];
 		String pass = subparts[2];
-		
-		if (!accounts.containsKey(user)){
-			return("No account. Please make an account");
+		switch(subparts[0].toLowerCase()){
+		case "login":
+			if (!accounts.containsKey(user)){
+				return("No account. Please make an account");
+			}
+			
+			if (!pass.equals(accounts.get(user))){
+				return("Wrong password. Please try again");
+			}
+			
+			return("Logged on");
+		case "register":
+			
+		default:
+			return(ServerProtocol.INVALID_SYNTAX);
 		}
 		
-		if (!pass.equals(accounts.get(user))){
-			return("Wrong password. Please try again");
-		}
-		
-		return("Logged on");
 	}
 	
 	
