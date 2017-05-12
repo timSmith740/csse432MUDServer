@@ -27,6 +27,14 @@ public abstract class GameObject {
 	public void removeFromInventory(Item item){
 		this.Inventory.remove(item);
 	}
+	
+	public void addToEquipment(Item item){
+		this.Equiped.add(item);
+	}
+	
+	public void removeFromEquipment(Item item){
+		this.Equiped.remove(item);
+	}
 
 	public Point getLocation(){
 		return this.location;
