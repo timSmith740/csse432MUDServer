@@ -44,8 +44,8 @@ public class Server {
 		this.users.add(test);
 		this.accounts = new HashMap<String, String>();
 		this.accounts.put("tester", "test");
-		Container chest = new Container();
-		Weapon sword = new Weapon(2);
+		Container chest = new Container("Joe's Box");
+		Weapon sword = new Weapon(1,2,2,2,10,"The Great Sword of Joe");
 		chest.addToInventory(sword);
 		this.theWorld.AddGameObjectAtLocation(chest, new Point(3,2));
 	}

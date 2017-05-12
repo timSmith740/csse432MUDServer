@@ -12,9 +12,20 @@ public abstract class GameObject {
 	Point respawnLocation;
 	Point location;
 	ArrayList<Item> Inventory = new ArrayList<Item>();
+	int AC;
+
 	
 	//Joe  
 	ArrayList<Item> Equiped = new ArrayList<Item>();
+	
+	public GameObject(String name){
+		this.AC=1;
+		this.name=name;
+	}
+	public GameObject(int AC, String name){
+		this.AC=AC;
+		this.name=name;
+	}
 	
 	public ArrayList<Item> getInventory(){
 		return this.Inventory;
@@ -30,6 +41,11 @@ public abstract class GameObject {
 	
 	public void addToEquipment(Item item){
 		this.Equiped.add(item);
+	}
+	
+	//joe
+	public Item getEquiped(int index){
+		return this.Equiped.get(index);
 	}
 	
 	public void removeFromEquipment(Item item){
@@ -64,6 +80,11 @@ public abstract class GameObject {
 			result = this.Equiped.get(counter)+ "\n";
 		}
 		return result;
+	}
+
+	public int getAC() {
+		// TODO Auto-generated method stub
+		return this.AC;
 	}
 }
  

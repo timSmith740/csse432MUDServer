@@ -1,19 +1,23 @@
 package characters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import items.Equipment;
 import items.Weapon;
 
 public abstract class GameCharacter extends GameObject{
+	public GameCharacter() {
+		super("Player");
+	//	equipment = new ArrayList<Equipment>();
+	//	weapons = new ArrayList<Weapon>();
+		// TODO Auto-generated constructor stub
+	}
 	private List<Weapon> weapons;
-	private List<Equipment> equipment;
-	
-	
-	
+	public List<Equipment> equipment;
 	int str, dex, con, intel;
 	
-	int getStat(String stat){
+	public int getStat(String stat){
 		switch(stat){
 			case "str":
 				return str;
@@ -52,4 +56,13 @@ public abstract class GameCharacter extends GameObject{
 	public String getHealth(){
 		return "&H:"+5+":"+6;
 	}
+
+	public int getAttackBonus() {
+		return intel+dex;
+	}
+	//Need to add Armor
+	public int getAC(){
+		return str;	
+	}
+	
 }

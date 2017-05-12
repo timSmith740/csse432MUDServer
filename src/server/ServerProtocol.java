@@ -4,14 +4,17 @@ import java.awt.Point;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import characters.GameCharacter;
 import characters.GameObject;
 import characters.Player;
 import gameMap.GameMap;
 import items.Item;
+import items.Weapon;
 import server.ServerProtocol.Direction;
 
 
@@ -57,12 +60,21 @@ public class ServerProtocol {
 			return "quit";
 					
 		case "attack":
-			if(subparts.length==2){
-			String sendback = "attack:"+subparts[1];
-			return(sendback);
+			if (subparts.length == 3){
+				int position = Integer.parseInt(subparts[1]) - 1;
+				List<GameObject> objects = map.checkForObjects(player);
+				GameObject defender = objects.get(position);
+				Weapon attackingWeapon= (Weapon) player.getEquiped(Integer.parseInt(subparts[2]) - 1);
+				int result = determineAttack(player,defender,attackingWeapon);
+				if(result==0){
+					return "You missed the object";
+				}
+				return "You hit the object with " +result+ " points of damage.";
+				//return objects.get(position).getInventory().toString();
+			} else{
+				return(ServerProtocol.INVALID_SYNTAX);
 			}
-			return(ServerProtocol.INVALID_SYNTAX);
-			
+
 		
 			
 		case "run":
@@ -182,6 +194,28 @@ public class ServerProtocol {
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
 		}
+		
+	}
+	
+	public static int determineAttack(GameCharacter character,GameObject defense, Weapon attackingWeapon){
+		int playerAttack = character.getAttackBonus()+attackingWeapon.getAttackBonus();
+		int defender = defense.getAC();
+		
+		
+		//Need to modifiy
+		int max = playerAttack+defender;
+		int min = 0;
+//		System.out.println(playerAttack+" "+defender+" "+max);
+		Random ranGen = new Random();
+		int result = ranGen.nextInt(max-min+1)+min;
+		if(result>=defender){
+			int damage= attackingWeapon.GetDammage(character);
+	
+			return damage;
+		}
+		
+		//miss
+		return 0;
 		
 	}
 	
