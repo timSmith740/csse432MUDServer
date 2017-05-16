@@ -7,10 +7,13 @@ import items.Equipment;
 import items.Weapon;
 
 public abstract class GameCharacter extends GameObject{
-	int str;
-	int dex;
-	int con;
-	int intel;
+	public int str;
+	public int dex;
+	public int con;
+	public int intel;
+	public int armor=0;
+	public int health=0;
+	public int totalHealth=1;
 	public GameCharacter() {
 		super("Player");
 	//	equipment = new ArrayList<Equipment>();
@@ -39,20 +42,24 @@ public abstract class GameCharacter extends GameObject{
 		switch(stat){
 			case "str":
 				this.str = val;
+				break;
 			case "dex":
 				this.dex = val;
+				break;
 			case "con":
 				this.con = val;
+				break;
 			case "intel":
 				this.intel = val;
+				break;
 		}
 	}
 	
 	//Joe Method
 	public String characterStats(){
 		//1 ,2 ,3, 4 is a filler for missing stat
-		//health health/health ac armor strength con int dex
-		return "&S:"+1+":"+2+":"+3+":"+4 +":"+str+":"+con+":"+intel+":"+dex;
+		//name health health/health ac armor strength con int dex
+		return "&S:"+this.name+":"+this.health+":"+this.totalHealth+":"+armor +":"+str+":"+con+":"+intel+":"+dex;
 	}
 	
 	//Joe Method
@@ -63,9 +70,6 @@ public abstract class GameCharacter extends GameObject{
 	public int getAttackBonus() {
 		return intel+dex;
 	}
-	//Need to add Armor
-	public int getAC(){
-		return str;	
-	}
+
 	
 }

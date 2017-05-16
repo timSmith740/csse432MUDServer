@@ -12,18 +12,18 @@ public abstract class GameObject {
 	Point respawnLocation;
 	Point location;
 	ArrayList<Item> Inventory = new ArrayList<Item>();
-	int AC;
+	int armor;
 
 	
 	//Joe  
 	ArrayList<Item> Equiped = new ArrayList<Item>();
 	
 	public GameObject(String name){
-		this.AC=1;
+		this.armor=1;
 		this.name=name;
 	}
-	public GameObject(int AC, String name){
-		this.AC=AC;
+	public GameObject(int armor, String name){
+		this.armor=armor;
 		this.name=name;
 	}
 	
@@ -90,9 +90,9 @@ public abstract class GameObject {
 		return result;
 	}
 
-	public int getAC() {
+	public int getArmor() {
 		// TODO Auto-generated method stub
-		return this.AC;
+		return this.armor;
 	}
 }
  

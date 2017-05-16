@@ -51,6 +51,10 @@ public class ServerProtocol {
 		return result;
 	}
 	
+	public static String update(Player player, String message){
+		return player.characterStats()+"@"+player.getInvString()+"@"+player.getEquString()+"@"+message;
+	}
+	
 	//parse commands
 	public static String CommandHandler(String command, Player player,GameMap map){
 		
@@ -131,8 +135,8 @@ public class ServerProtocol {
 			return (sendback);
 			
 		case "update":
-			String update=  player.characterStats()+"@"+player.getInvString()+"@"+player.getEquString()+"@Stats returned";
-			return update;
+			//String update=  player.characterStats()+"@"+player.getInvString()+"@"+player.getEquString()+"@Stats returned";
+			return update(player,"Stats returned");
 		
 		case "health":
 			return player.getHealth()+"@HealthReturned";
@@ -153,14 +157,14 @@ public class ServerProtocol {
 			Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
 			objects.get(containerPosition).removeFromInventory(chosenItem);
 			player.addToInventory(chosenItem);
-			return chosenItem.toString()+" added to Inventory";
+			return  update(player,chosenItem.toString()+" added to Inventory");
 			
 		case "equip":
 			itemPosition = Integer.parseInt(subparts[1]) - 1;
 			chosenItem = player.getInventory().get(itemPosition);
 			player.addToEquipment(chosenItem);
 			player.removeFromInventory(chosenItem);
-			return chosenItem.toString()+" added to Equipment";
+			return  update(player,chosenItem.toString()+" added to Equipment");
 			
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
@@ -261,7 +265,7 @@ public class ServerProtocol {
 	
 	public static int determineAttack(GameCharacter character,GameObject defense, Weapon attackingWeapon){
 		int playerAttack = character.getAttackBonus()+attackingWeapon.getAttackBonus();
-		int defender = defense.getAC();
+		int defender = defense.getArmor();
 		
 		
 		//Need to modifiy

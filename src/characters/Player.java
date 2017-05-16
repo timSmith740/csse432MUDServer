@@ -6,6 +6,8 @@ public class Player extends GameCharacter {
 	public Player(){
 	}
 	
+	
+	
 	public void deleteInventory(){
 		Inventory.clear();
 	}
