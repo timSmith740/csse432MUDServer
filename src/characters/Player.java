@@ -16,12 +16,16 @@ public class Player extends GameCharacter {
 		switch(stat){
 			case "str":
 				this.str++;
+				break;
 			case "dex":
 				this.dex++;
+				break;
 			case "con":
 				this.con++;
+				break;
 			case "intel":
 				this.intel++;
+				break;
 		}
 	}
 }
