@@ -43,15 +43,15 @@ public class weaponGenerator {
 			switch(range){
 			case 1:
 				hit =ranGen.nextInt(0+1+1)-1;
-				name = "Dagger";
+				name = dexWeaponName(1);
 				break;
 			case 2:
 				hit =ranGen.nextInt(3-1+1)+1;
-				name = "Darts";
+				name = dexWeaponName(2);
 				break;
 			case 3:
 				hit =ranGen.nextInt(5-4+1)+4;
-				name = "Bow and Arrows";
+				name = dexWeaponName(3);
 				break;
 			
 			default: 
@@ -62,15 +62,15 @@ public class weaponGenerator {
 			switch(range){
 			case 1:
 				hit =ranGen.nextInt(0+1+1)-1;
-				name= "Staff";
+				name= strWeaponName(1);
 				break;
 			case 2:
 				hit =ranGen.nextInt(5-4+1)+4;
-				name = "Wand";
+				name = strWeaponName(2);
 				break;
 			case 3:
 				hit =ranGen.nextInt(3-1+1)+1;
-				name = "Magic Ball";
+				name = strWeaponName(3);
 				break;
 			
 			default: 
@@ -81,15 +81,15 @@ public class weaponGenerator {
 			switch(range){
 			case 1:
 				hit =ranGen.nextInt(5-4+1)+4;
-				name = "Axe";
+				name = intelWeaponName(1);
 				break;
 			case 2:
 				hit =ranGen.nextInt(3-1+1)+1;
-				name = "Sword";
+				name = intelWeaponName(2);
 				break;
 			case 3:
 				hit =ranGen.nextInt(0+1+1)-1;
-				name = "Javalin";
+				name = intelWeaponName(3);
 				break;
 			
 			default: 
@@ -100,9 +100,59 @@ public class weaponGenerator {
 			hit = 0;
 				
 		}
-		System.out.println("Weapon"+type+" "+ damage+" "+range+" "+level+" "+name);
+	//	System.out.println("Weapon"+type+" "+ damage+" "+range+" "+level+" "+name);
 		Weapon myWeapon = new Weapon(damage,type,range,hit,level, name);
 		
 		return myWeapon;
+	}
+	
+	
+	public static String dexWeaponName(int range){
+		Random ranGen = new Random();
+		String names1[] = {"Dagger","Sickle", "Claws"};
+		String names2[] = {"Darts","Whip","Throwing Stars"};
+		String names3[] = {"Bow and Arrows","Crossbow","Blow Gun"};
+		switch(range){
+			case 1:
+				return names1[ranGen.nextInt(names1.length-0+1)];
+			case 2:
+				return names2[ranGen.nextInt(names2.length-0+1)];
+			case 3:
+				return names3[ranGen.nextInt(names3.length-0+1)];			
+		}	
+		return "Error";	
+	}
+	
+	
+	public static String strWeaponName(int range){
+		Random ranGen = new Random();
+		String names1[] = {"Axe", "Club","Hammer"};
+		String names2[] = {"Sword","Pike","Spear","Scimitar","Lance"};
+		String names3[] = {"Javalin","Throwing Axe"};
+		switch(range){
+			case 1:
+				return names1[ranGen.nextInt(names1.length-0+1)];
+			case 2:
+				return names2[ranGen.nextInt(names2.length-0+1)];
+			case 3:
+				return names3[ranGen.nextInt(names3.length-0+1)];			
+		}	
+		return "Error";	
+	}
+	
+	public static String intelWeaponName(int range){
+		Random ranGen = new Random();
+		String names1[] = {"Staff","Magic Necklace"};
+		String names2[] = {"Wand","Magic Ring"};
+		String names3[] = {"Magic Ball","Magic Gloves"};
+		switch(range){
+			case 1:
+				return names1[ranGen.nextInt(names1.length-0+1)];
+			case 2:
+				return names2[ranGen.nextInt(names2.length-0+1)];
+			case 3:
+				return names3[ranGen.nextInt(names3.length-0+1)];			
+		}	
+		return "Error";	
 	}
 }
