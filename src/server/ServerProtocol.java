@@ -121,7 +121,6 @@ public class ServerProtocol {
 				}else{
 					sendback = "Cannot Move to that position";
 				}
-				System.out.println(player.getLocation());
 				return(sendback);
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
@@ -169,17 +168,17 @@ public class ServerProtocol {
 		
 	}
 	
-	public static String logInHandler(String command, ArrayList<Account> users, HashMap<String, String> accounts){
+	public static String logInHandler(String command, ArrayList<Account> users, HashMap<String, String> accounts, Player player, GameMap map){
 		String[] subparts = command.split(" ");
 		
 		//Wrong command
-		if (subparts.length != 3){
-			return(ServerProtocol.INVALID_SYNTAX);
-		}
-		String user = subparts[1];
-		String pass = subparts[2];
+		//if (subparts.length != 3){
+		//	return(ServerProtocol.INVALID_SYNTAX);
+		//}
 		switch(subparts[0].toLowerCase()){
 		case "login":
+			String user = subparts[1];
+			String pass = subparts[2];
 			if (!accounts.containsKey(user)){
 				return("No account. Please make an account");
 			}
@@ -187,14 +186,77 @@ public class ServerProtocol {
 			if (!pass.equals(accounts.get(user))){
 				return("Wrong password. Please try again");
 			}
-			
 			return("Logged on");
 		case "register":
-			
+			user = subparts[1];
+			pass = subparts[2];
+			if (accounts.containsKey(user)){
+				return("Username already used. Please use a different name.");
+			}
+			Account account = new Account(user, pass);
+			users.add(account);
+			accounts.put(user, pass);
+			return("Registered. Please choose a class: Fighter, Thief, or Wizard. Choose a preset and allocate two points.\n"
+					+ "Save your option by entering [class] [stat] [stat] [Character name] [username]");
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
 		}
 		
+	}
+	
+	public static Player makePlayer(String command, ArrayList<Account> users, HashMap<String, String> accounts, GameMap map){
+		String[] subparts = command.split(" ");
+		Player character = new Player();
+		switch(subparts[0].toLowerCase()){
+		case "fighter":
+			if (subparts.length == 1){
+				//return("CON: 2\nINT: 1\nSTR: 3\nDEX: 2");
+			}
+			if (subparts.length == 5){
+				character.setStat("con", 2);
+				character.setStat("dex", 2);
+				character.setStat("intel", 1);
+				character.setStat("str", 3);
+			}
+			break;
+		case "thief":
+			if (subparts.length == 1){
+				//return("CON: 1\nINT: 2\nSTR: 2\nDEX: 3");
+			}
+			if (subparts.length == 5){
+				character.setStat("con", 1);
+				character.setStat("dex", 3);
+				character.setStat("intel", 2);
+				character.setStat("str", 2);
+			}
+			break;
+		case "wizard":
+			if (subparts.length == 1){
+				//return("CON: 2\nINT: 3\nSTR: 1\nDEX: 2");
+			}
+			if (subparts.length == 5){
+				character.setStat("con", 2);
+				character.setStat("dex", 2);
+				character.setStat("intel", 3);
+				character.setStat("str", 1);
+			}
+			break;
+		
+		default:
+			return(null);
+		}
+		character.increaseStat(subparts[1].toLowerCase());
+		character.increaseStat(subparts[2].toLowerCase());
+		character.setName(subparts[3]);
+		Point startingPoint = new Point(2,2);
+		character.setLocation(startingPoint);
+		map.AddGameObjectAtLocation(character, startingPoint);
+		Account foundAccount = findAccount(subparts[4], users);
+		if (foundAccount == null){
+			return(null);
+		}
+		foundAccount.addCharacter(character);
+		return(character);
 	}
 	
 	public static int determineAttack(GameCharacter character,GameObject defense, Weapon attackingWeapon){
@@ -219,6 +281,13 @@ public class ServerProtocol {
 		
 	}
 	
-	
+	public static Account findAccount(String user, ArrayList<Account> users){
+		for (Account current : users){
+			if (current.username.equals(user)){
+				return current;
+			}
+		}
+		return null;
+	}
 
 }

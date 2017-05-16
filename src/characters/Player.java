@@ -4,13 +4,22 @@ public class Player extends GameCharacter {
 	
 	//joe Method
 	public Player(){
-		this.str=1;
-		this.dex=1;
-		this.intel=1;
-		this.con=1;
 	}
 	
 	public void deleteInventory(){
 		Inventory.clear();
+	}
+	
+	public void increaseStat(String stat){
+		switch(stat){
+			case "str":
+				this.str++;
+			case "dex":
+				this.dex++;
+			case "con":
+				this.con++;
+			case "intel":
+				this.intel++;
+		}
 	}
 }

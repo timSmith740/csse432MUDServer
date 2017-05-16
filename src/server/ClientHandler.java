@@ -28,9 +28,10 @@ public class ClientHandler implements Runnable {
 	Socket mySocket;
 	OutputStream out;
 	InputStream in;
-	Player player;
+	public Player player;
 	GameMap theWorld;
 	Boolean loggedIn;
+	Boolean registering;
 	ArrayList<Account> users;
 	HashMap<String, String> accounts;
 	
@@ -42,12 +43,13 @@ public class ClientHandler implements Runnable {
 		this.player = new Player();
 		this.theWorld= theWorld;
 		this.loggedIn = false;
+		this.registering = false;
 		this.users = theUsers;
 		this.accounts = theAccounts;
 		
 		//Temporarly 
-		Point startingPoint = new Point(2,2);
-		this.theWorld.AddGameObjectAtLocation(player, startingPoint);
+		//Point startingPoint = new Point(2,2);
+		//this.theWorld.AddGameObjectAtLocation(player, startingPoint);
 		
 	
 	}
@@ -67,10 +69,30 @@ public class ClientHandler implements Runnable {
 					c = this.in.read();
 				}
 				String command = builder.toString();
+				if (this.registering){
+					Player result = ServerProtocol.makePlayer(command, this.users, this.accounts, this.theWorld);
+					if (result == null){
+						this.out.write("Problem occured making character. Please try again.".getBytes());
+						break command;
+					}
+					this.player = result;
+					this.registering = false;
+					this.loggedIn = true;
+					this.out.write("Logged on".getBytes());
+					break command;
+				}
 				if (this.loggedIn == false){
-					String result = ServerProtocol.logInHandler(command, this.users, this.accounts);
+					String result = ServerProtocol.logInHandler(command, this.users, this.accounts, this.player, this.theWorld);
 					if (result.equals("Logged on")){
 						this.loggedIn = true;
+						String user = command.split(" ")[1];
+						Account foundAccount = ServerProtocol.findAccount(user, users);
+						this.player = foundAccount.getCharacter();
+					}
+					String registering = result.split(" ")[0];
+					if (registering.equals("Registered.")){
+						this.loggedIn = false;
+						this.registering = true;
 					}
 					this.out.write(result.getBytes());
 					break command;

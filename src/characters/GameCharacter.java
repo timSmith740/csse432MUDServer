@@ -7,6 +7,10 @@ import items.Equipment;
 import items.Weapon;
 
 public abstract class GameCharacter extends GameObject{
+	int str;
+	int dex;
+	int con;
+	int intel;
 	public GameCharacter() {
 		super("Player");
 	//	equipment = new ArrayList<Equipment>();
@@ -15,33 +19,32 @@ public abstract class GameCharacter extends GameObject{
 	}
 	private List<Weapon> weapons;
 	public List<Equipment> equipment;
-	int str, dex, con, intel;
 	
 	public int getStat(String stat){
 		switch(stat){
 			case "str":
-				return str;
+				return this.str;
 			case "dex":
-				return dex;
+				return this.dex;
 			case "con":
-				return con;
+				return this.con;
 			case "intel":
-				return intel;
+				return this.intel;
 			default:
 				return 0;
 		}
 	}
 	
-	void setStat(String stat, int val){
+	public void setStat(String stat, int val){
 		switch(stat){
 			case "str":
-				str = val;
+				this.str = val;
 			case "dex":
-				dex = val;
+				this.dex = val;
 			case "con":
-				con = val;
+				this.con = val;
 			case "intel":
-				intel = val;
+				this.intel = val;
 		}
 	}
 	

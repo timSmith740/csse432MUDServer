@@ -11,4 +11,12 @@ public class Account {
 		this.username = user;
 		this.password = pass;
 	}
+	
+	public void addCharacter(Player player){
+		this.character = player;
+	}
+	
+	public Player getCharacter(){
+		return this.character;
+	}
 }

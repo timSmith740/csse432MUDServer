@@ -27,6 +27,14 @@ public abstract class GameObject {
 		this.name=name;
 	}
 	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public String getName(){
+		return this.name;
+	}
+	
 	public ArrayList<Item> getInventory(){
 		return this.Inventory;
 	}
