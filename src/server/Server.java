@@ -16,6 +16,7 @@ import characters.GameCharacter;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
 import items.Weapon;
+import items.weaponGenerator;
 import worldObjects.WorldObject;
 
 
@@ -45,8 +46,10 @@ public class Server {
 		this.accounts = new HashMap<String, String>();
 		this.accounts.put("tester", "test");
 		Container chest = new Container("Joe's Box");
-		Weapon sword = new Weapon(1, 4, 1, 2, "The Great Sword of Joe");
-		chest.addToInventory(sword);
+		for(int counter=0; counter<5; counter++){
+			Weapon sword = weaponGenerator.createWeapon(1);
+			chest.addToInventory(sword);
+		}
 		this.theWorld.AddGameObjectAtLocation(chest, new Point(3,2));
 	}
 	

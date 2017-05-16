@@ -6,7 +6,7 @@ public class weaponGenerator {
 
 
 
-	public static Weapon weaponGenerator(int level){
+	public static Weapon createWeapon(int level){
 	
 		Random ranGen = new Random();
 		//int result = ranGen.nextInt(max-min+1)+min;
@@ -66,11 +66,11 @@ public class weaponGenerator {
 				break;
 			case 2:
 				hit =ranGen.nextInt(5-4+1)+4;
-				name = "Short Wand";
+				name = "Wand";
 				break;
 			case 3:
 				hit =ranGen.nextInt(3-1+1)+1;
-				name = "Wand";
+				name = "Magic Ball";
 				break;
 			
 			default: 
@@ -100,8 +100,9 @@ public class weaponGenerator {
 			hit = 0;
 				
 		}
+		System.out.println("Weapon"+type+" "+ damage+" "+range+" "+level+" "+name);
+		Weapon myWeapon = new Weapon(damage,type,range,hit,level, name);
 		
-		Weapon myWeapon = new Weapon(damage,type,range,hit,name);
 		return myWeapon;
 	}
 }

@@ -11,14 +11,16 @@ public class Weapon extends Equipment {
 	//4 = Str
 	public int range; 
 	public int hit;
+	public int level; 
 	public String name;
 	
-	public Weapon(int damage, int type, int range, int hit, String name){
+	public Weapon(int damage, int type, int range, int hit,int level, String name){
 		this.damage=damage;
 		this.type = type;
 		this.range =  range;
 		this.hit = hit;
 		this.name = name;
+		this.level = level;
 	}
 	
 	public int getRange(){
@@ -52,7 +54,7 @@ public class Weapon extends Equipment {
 	}
 	
 	public String toString(){
-		return this.name;
+		return this.name+": "+this.damage;
 	}
 
 }
