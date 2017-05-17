@@ -4,18 +4,17 @@ import java.awt.Point;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import characters.CommonFolk;
 import characters.GameCharacter;
 import characters.GameObject;
 import characters.Player;
 import gameMap.GameMap;
 import items.Item;
 import items.Weapon;
-import server.ServerProtocol.Direction;
 
 
 /*
@@ -169,7 +168,26 @@ public class ServerProtocol {
 			player.addToEquipment(chosenItem);
 			player.removeFromInventory(chosenItem);
 			return  update(player,chosenItem.toString()+" added to Equipment");
-			
+		case "talk":
+			List<GameObject> objects = map.checkForObjects(player);
+			String name = subparts[1];
+			CommonFolk folk = null;
+			for(GameObject o : objects){
+				if(o.getName().equals(name)){
+					if(o.getClass().equals(CommonFolk.class)){
+						folk = (CommonFolk) o;
+						break;
+					}
+					else if(o.getClass().equals(Player.class)){
+						return "They don't seem to be listening";
+					}
+					return "That can't talk";
+				}
+			}
+			if(folk==null){
+				return "There is nobody here";
+			}
+			return folk.talk();
 		case "look":
 			return(ServerProtocol.INVALID_SYNTAX);
 			

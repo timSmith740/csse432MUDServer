@@ -1,6 +1,7 @@
 package characters;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import items.Gold;
@@ -10,8 +11,8 @@ public class ShopKeeper extends CommonFolk {
 	private String shopIntro;
 	private Map<Item, Integer> wares = new HashMap<>();
 	
-	public ShopKeeper(String name, String intro){
-		this.name=name;
+	public ShopKeeper(String name, List<String> dialogue, String intro){
+		super(name, dialogue);
 		this.shopIntro = intro;
 	}
 	public String getShopIntro(){
