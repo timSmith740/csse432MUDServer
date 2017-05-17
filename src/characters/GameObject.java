@@ -3,6 +3,7 @@ package characters;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import items.Gold;
 import items.Item;
 
 public abstract class GameObject {
@@ -13,6 +14,7 @@ public abstract class GameObject {
 	Point location;
 	ArrayList<Item> Inventory = new ArrayList<Item>();
 	int armor;
+	Gold gold;
 
 	
 	//Joe  
@@ -21,6 +23,7 @@ public abstract class GameObject {
 	public GameObject(String name){
 		this.armor=1;
 		this.name=name;
+		this.gold =new Gold(0);
 	}
 	public GameObject(int armor, String name){
 		this.armor=armor;
@@ -39,12 +42,24 @@ public abstract class GameObject {
 		return this.Inventory;
 	}
 	
+	
 	public void addToInventory(Item item){
+		if(item.getClass().equals(Gold.class)){
+			this.gold.add((Gold) item);
+		}
+		else{
+			this.Inventory.add(item);
+		}
 		this.Inventory.add(item);
 	}
 	
 	public void removeFromInventory(Item item){
-		this.Inventory.remove(item);
+		if(item.getClass().equals(Gold.class)){
+			this.gold.add((Gold) item);
+		}
+		else{
+			this.Inventory.remove(item);
+		}
 	}
 	
 	public void addToEquipment(Item item){
@@ -70,6 +85,9 @@ public abstract class GameObject {
 		}else{
 			this.location=new Point(location.x, location.y);
 		}
+	}
+	public int getGoldAmount(){
+		return this.gold.getAmount();
 	}
 	
 	//Joe Method
