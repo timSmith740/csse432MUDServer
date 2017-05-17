@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import characters.Player;
 import characters.Container;
@@ -32,6 +33,7 @@ public class Server {
 	GameMap theWorld;
 	ArrayList<Account> users;
 	HashMap<String, String> accounts;
+	Map<Container, Point> containers;
 	
 	
 	public Server(int Port){
@@ -45,18 +47,25 @@ public class Server {
 		this.users.add(test);
 		this.accounts = new HashMap<String, String>();
 		this.accounts.put("tester", "test");
-		Container chest = new Container("Joe's Box");
-		for(int counter=0; counter<5; counter++){
+		this.containers = new HashMap<Container, Point>();
+		Container chest = new Container("Joe's Box", 1);
+		for(int counter=0; counter<1; counter++){
 			Weapon sword = weaponGenerator.createWeapon(1);
 			chest.addToInventory(sword);
 		}
-		this.theWorld.AddGameObjectAtLocation(chest, new Point(3,2));
+		System.out.println(chest.getInvString());
+		Point chestPoint = new Point(3,2);
+		containers.put(chest, chestPoint);
+		this.theWorld.AddGameObjectAtLocation(chest, chestPoint);
 	}
 	
 	public void execute(){
 		//Connect to server
 		try{
 			mySocket = new ServerSocket(Port);
+			WorldUpdater updater = new WorldUpdater(this.theWorld, this.containers);
+			Thread updateRunner = new Thread(updater);
+			updateRunner.start();
 			System.out.println("Server running on port: "+Port);
 		}catch(Exception e){
 			e.printStackTrace();
