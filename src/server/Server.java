@@ -34,6 +34,8 @@ public class Server {
 	ArrayList<Account> users;
 	HashMap<String, String> accounts;
 	Map<Container, Point> containers;
+	ArrayList<Account> loggedOn;
+	ArrayList<Account> loggedOff;
 	
 	
 	public Server(int Port){
@@ -48,6 +50,8 @@ public class Server {
 		this.accounts = new HashMap<String, String>();
 		this.accounts.put("tester", "test");
 		this.containers = new HashMap<Container, Point>();
+		this.loggedOn = new ArrayList<Account>();
+		this.loggedOff = new ArrayList<Account>();
 		Container chest = new Container("Joe's Box", 1);
 		for(int counter=0; counter<1; counter++){
 			Weapon sword = weaponGenerator.createWeapon(1);
@@ -76,7 +80,7 @@ public class Server {
 			
 			try {
 				Socket client = this.mySocket.accept();
-				ClientHandler myHandler = new ClientHandler(this, client,this.theWorld, this.users, this.accounts);
+				ClientHandler myHandler = new ClientHandler(this, client,this.theWorld, this.users, this.accounts, this.loggedOn, this.loggedOff);
 				Thread runner = new Thread(myHandler);
 				runner.start();
 			} catch (IOException e) {

@@ -32,10 +32,14 @@ public class ClientHandler implements Runnable {
 	GameMap theWorld;
 	Boolean loggedIn;
 	Boolean registering;
+	Account currentUser;
 	ArrayList<Account> users;
+	ArrayList<Account> loggedOn;
+	ArrayList<Account> loggedOff;
 	HashMap<String, String> accounts;
 	
-	public ClientHandler(Server theServer, Socket theSocket,GameMap theWorld, ArrayList<Account> theUsers, HashMap<String, String> theAccounts) throws IOException{
+	public ClientHandler(Server theServer, Socket theSocket,GameMap theWorld, ArrayList<Account> theUsers, 
+			HashMap<String, String> theAccounts, ArrayList<Account> loggedOn, ArrayList<Account> loggedOff) throws IOException{
 		this.myServer=theServer;
 		this.mySocket= theSocket;
 		this.in = this.mySocket.getInputStream();
@@ -46,6 +50,8 @@ public class ClientHandler implements Runnable {
 		this.registering = false;
 		this.users = theUsers;
 		this.accounts = theAccounts;
+		this.loggedOff = loggedOff;
+		this.loggedOn = loggedOn;
 		
 		//Temporarly 
 		//Point startingPoint = new Point(2,2);
@@ -78,6 +84,11 @@ public class ClientHandler implements Runnable {
 					this.player = result;
 					this.registering = false;
 					this.loggedIn = true;
+					String user = command.split(" ")[4];
+					Account foundAccount = ServerProtocol.findAccount(user, this.users);
+					this.currentUser = foundAccount;
+					this.loggedOn.add(this.currentUser);
+					this.loggedOff.remove(this.currentUser);
 					this.out.write("Logged on".getBytes());
 					break command;
 				}
@@ -86,8 +97,16 @@ public class ClientHandler implements Runnable {
 					if (result.equals("Logged on")){
 						this.loggedIn = true;
 						String user = command.split(" ")[1];
-						Account foundAccount = ServerProtocol.findAccount(user, users);
+						Account foundAccount = ServerProtocol.findAccount(user, this.users);
+						if (this.loggedOn.contains(foundAccount)){
+							this.out.write("User already logged on".getBytes());
+							this.loggedIn = false;
+							break command;
+						}
 						this.player = foundAccount.getCharacter();
+						this.currentUser = foundAccount;
+						this.loggedOn.add(this.currentUser);
+						this.loggedOff.remove(this.currentUser);
 					}
 					String registering = result.split(" ")[0];
 					if (registering.equals("Registered.")){
@@ -105,6 +124,8 @@ public class ClientHandler implements Runnable {
 					System.out.println("Closing Connection To: "+ this.mySocket.getRemoteSocketAddress());
 					try{
 						this.mySocket.close();
+						this.loggedOff.add(this.currentUser);
+						this.loggedOn.remove(this.currentUser);
 						break;
 					}catch(Exception e){
 						e.printStackTrace();
