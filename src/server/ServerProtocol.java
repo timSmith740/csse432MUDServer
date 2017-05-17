@@ -13,6 +13,7 @@ import characters.GameCharacter;
 import characters.GameObject;
 import characters.Player;
 import gameMap.GameMap;
+import items.Gold;
 import items.Item;
 import items.Weapon;
 
@@ -144,7 +145,12 @@ public class ServerProtocol {
 			if (subparts.length == 2){
 				int position = Integer.parseInt(subparts[1]) - 1;
 				List<GameObject> objects = map.checkForObjects(player);
-				return objects.get(position).getInventory().toString();
+				if (objects.get(position).getGoldAmount() > 0){
+					sendback = objects.get(position).getInventory().toString() + " Gold=" +Integer.toString(objects.get(position).getGoldAmount());
+				} else {
+					sendback = objects.get(position).getInventory().toString();
+				}
+				return sendback;
 			} else{
 				return map.checkForObjects(player).toString();
 			}
@@ -154,10 +160,20 @@ public class ServerProtocol {
 				int containerPosition = Integer.parseInt(subparts[1]) - 1;
 				int itemPosition = Integer.parseInt(subparts[2]) - 1;
 				List<GameObject> objects = map.checkForObjects(player);
-				Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
-				objects.get(containerPosition).removeFromInventory(chosenItem);
-				player.addToInventory(chosenItem);
-				return  update(player,chosenItem.toString()+" added to Inventory");
+				try{
+					Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
+					objects.get(containerPosition).removeFromInventory(chosenItem);
+					player.addToInventory(chosenItem);
+					return  update(player,chosenItem.toString()+" added to Inventory");
+				} catch (IndexOutOfBoundsException e){
+					if (objects.get(containerPosition).getGoldAmount() > 0){
+						player.addToInventory(new Gold(objects.get(containerPosition).getGoldAmount()));
+						objects.get(containerPosition).removeFromInventory(new Gold(objects.get(containerPosition).getGoldAmount()));
+						return (Integer.toString(objects.get(containerPosition).getGoldAmount())+" Gold added to Inventory");
+					} else {
+						return("No item in that slot");
+					}
+				}
 			} else {
 				return(ServerProtocol.INVALID_SYNTAX );
 			}
@@ -190,6 +206,9 @@ public class ServerProtocol {
 			return folk.talk();
 		case "look":
 			return(ServerProtocol.INVALID_SYNTAX);
+			
+		case "gold":
+			return (Integer.toString(player.getGoldAmount()) + " Gold");
 			
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);

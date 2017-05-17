@@ -53,7 +53,7 @@ public class Server {
 		this.loggedOn = new ArrayList<Account>();
 		this.loggedOff = new ArrayList<Account>();
 		Container chest = new Container("Joe's Box", 1);
-		for(int counter=0; counter<1; counter++){
+		for(int counter=0; counter<2; counter++){
 			Weapon sword = weaponGenerator.createWeapon(1);
 			chest.addToInventory(sword);
 		}

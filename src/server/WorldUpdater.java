@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import characters.Container;
 import gameMap.GameMap;
+import items.Gold;
 import items.Weapon;
 import items.weaponGenerator;
 
@@ -42,27 +43,37 @@ public class WorldUpdater implements Runnable {
 	
 	public void refillContainer(Container container){
 		int level = container.getLevel();
-		Random ranGen = new Random();// will be used to generate gold later
+		Random ranGen = new Random();
 		switch(level){
 		case 1:
 			Weapon sword = weaponGenerator.createWeapon(1);
 			container.addToInventory(sword);
+			int goldAmount = ranGen.nextInt(2)+1;
+			container.addToInventory(new Gold(goldAmount));
 			break;
 		case 2:
 			sword = weaponGenerator.createWeapon(2);
 			container.addToInventory(sword);
+			goldAmount = ranGen.nextInt(4)+1;
+			container.addToInventory(new Gold(goldAmount));
 			break;
 		case 3:
 			sword = weaponGenerator.createWeapon(3);
 			container.addToInventory(sword);
+			goldAmount = ranGen.nextInt(9)+2;
+			container.addToInventory(new Gold(goldAmount));
 			break;
 		case 4:
 			sword = weaponGenerator.createWeapon(4);
 			container.addToInventory(sword);
+			goldAmount = ranGen.nextInt(12)+4;
+			container.addToInventory(new Gold(goldAmount));
 			break;
 		default:
 			sword = weaponGenerator.createWeapon(1);
 			container.addToInventory(sword);
+			goldAmount = ranGen.nextInt(2);
+			container.addToInventory(new Gold(goldAmount));
 		}
 			
 	}

@@ -94,7 +94,7 @@ public abstract class GameObject {
 	public String getInvString(){
 		String result = "";
 		for(int counter=0; counter<this.Inventory.size(); counter++){
-			result = this.Inventory.get(counter)+ "\n";
+			result = result + this.Inventory.get(counter)+ "\n";
 		}
 		return result;
 	}
@@ -103,7 +103,7 @@ public abstract class GameObject {
 	public String getEquString(){
 		String result = "";
 		for(int counter=0; counter<this.Equiped.size(); counter++){
-			result = this.Equiped.get(counter)+ "\n";
+			result = result + this.Equiped.get(counter)+ "\n";
 		}
 		return result;
 	}
