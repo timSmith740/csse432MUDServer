@@ -50,7 +50,7 @@ public abstract class GameObject {
 		else{
 			this.Inventory.add(item);
 		}
-		this.Inventory.add(item);
+		//this.Inventory.add(item);
 	}
 	
 	public void removeFromInventory(Item item){
