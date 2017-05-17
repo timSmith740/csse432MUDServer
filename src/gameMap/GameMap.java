@@ -105,9 +105,7 @@ public class GameMap {
 	public List<GameObject> checkForObjects(GameCharacter character){
 		List<GameObject> storedObjects = objectMap.get(character.getLocation());
 		List<GameObject> objects = new ArrayList<GameObject>(storedObjects);
-		System.out.println(objects.toString());
 		objects.remove(character);
-		System.out.println(objects.toString());
 		return(objects);
 	}
 }
