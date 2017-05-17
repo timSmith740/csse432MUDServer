@@ -35,7 +35,7 @@ public class ServerProtocol {
 		North, South, East, West
 	}
 	
-	//To recieve a file
+	//To receive a file
 	public static byte[] recieve(InputStream in) throws IOException{
 		int nRead=-1;
 		byte [] result = new byte[0];
@@ -170,6 +170,9 @@ public class ServerProtocol {
 			player.removeFromInventory(chosenItem);
 			return  update(player,chosenItem.toString()+" added to Equipment");
 			
+		case "look":
+			return(ServerProtocol.INVALID_SYNTAX);
+			
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
 		}
@@ -272,7 +275,7 @@ public class ServerProtocol {
 		int defender = defense.getArmor();
 		
 		
-		//Need to modifiy
+		//Need to modify
 		int max = playerAttack+defender;
 		int min = 0;
 //		System.out.println(playerAttack+" "+defender+" "+max);
