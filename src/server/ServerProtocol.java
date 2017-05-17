@@ -151,17 +151,21 @@ public class ServerProtocol {
 			}
 			
 		case "take":
-			int containerPosition = Integer.parseInt(subparts[1]) - 1;
-			int itemPosition = Integer.parseInt(subparts[2]) - 1;
-			List<GameObject> objects = map.checkForObjects(player);
-			Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
-			objects.get(containerPosition).removeFromInventory(chosenItem);
-			player.addToInventory(chosenItem);
-			return  update(player,chosenItem.toString()+" added to Inventory");
+			if (subparts.length == 3){
+				int containerPosition = Integer.parseInt(subparts[1]) - 1;
+				int itemPosition = Integer.parseInt(subparts[2]) - 1;
+				List<GameObject> objects = map.checkForObjects(player);
+				Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
+				objects.get(containerPosition).removeFromInventory(chosenItem);
+				player.addToInventory(chosenItem);
+				return  update(player,chosenItem.toString()+" added to Inventory");
+			} else {
+				return(ServerProtocol.INVALID_SYNTAX );
+			}
 			
 		case "equip":
-			itemPosition = Integer.parseInt(subparts[1]) - 1;
-			chosenItem = player.getInventory().get(itemPosition);
+			int itemPosition = Integer.parseInt(subparts[1]) - 1;
+			Item chosenItem = player.getInventory().get(itemPosition);
 			player.addToEquipment(chosenItem);
 			player.removeFromInventory(chosenItem);
 			return  update(player,chosenItem.toString()+" added to Equipment");
