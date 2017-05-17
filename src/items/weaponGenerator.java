@@ -114,11 +114,11 @@ public class weaponGenerator {
 		String names3[] = {"Bow and Arrows", "Crossbow", "Blow Gun", "Sling", "Atlatl"};
 		switch(range){
 			case 1:
-				return names1[ranGen.nextInt(names1.length-0+1)];
+				return names1[ranGen.nextInt(names1.length)];//Random index from 0(inclusive) to array length (exclusive)
 			case 2:
-				return names2[ranGen.nextInt(names2.length-0+1)];
+				return names2[ranGen.nextInt(names2.length)];
 			case 3:
-				return names3[ranGen.nextInt(names3.length-0+1)];			
+				return names3[ranGen.nextInt(names3.length)];			
 		}	
 		return "Error";	
 	}
@@ -131,11 +131,11 @@ public class weaponGenerator {
 		String names3[] = {"Javelin", "Throwing Axe", "Boomerang", "Bolas", "Chakram"};
 		switch(range){
 			case 1:
-				return names1[ranGen.nextInt(names1.length-0+1)];
+				return names1[ranGen.nextInt(names1.length)];
 			case 2:
-				return names2[ranGen.nextInt(names2.length-0+1)];
+				return names2[ranGen.nextInt(names2.length)];
 			case 3:
-				return names3[ranGen.nextInt(names3.length-0+1)];			
+				return names3[ranGen.nextInt(names3.length)];			
 		}	
 		return "Error";	
 	}
@@ -147,11 +147,11 @@ public class weaponGenerator {
 		String names3[] = {"Magic Ball", "Magic Gloves", "Spell: Fireball", "Spell: Wind Blast", "Spell: Earth burst"};
 		switch(range){
 			case 1:
-				return names1[ranGen.nextInt(names1.length-0+1)];
+				return names1[ranGen.nextInt(names1.length)];
 			case 2:
-				return names2[ranGen.nextInt(names2.length-0+1)];
+				return names2[ranGen.nextInt(names2.length)];
 			case 3:
-				return names3[ranGen.nextInt(names3.length-0+1)];			
+				return names3[ranGen.nextInt(names3.length)];			
 		}	
 		return "Error";	
 	}
