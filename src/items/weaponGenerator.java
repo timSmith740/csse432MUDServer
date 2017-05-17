@@ -109,16 +109,16 @@ public class weaponGenerator {
 	
 	public static String dexWeaponName(int range){
 		Random ranGen = new Random();
-		String names1[] = {"Dagger","Sickle", "Claws"};
-		String names2[] = {"Darts","Whip","Throwing Stars"};
-		String names3[] = {"Bow and Arrows","Crossbow","Blow Gun"};
+		String names1[] = {"Dagger", "Sickle", "Claws", "Rapier", "Swordstaff"};
+		String names2[] = {"Darts", "Whip", "Throwing Stars", "Throwing Knives", "Chainwhip"};
+		String names3[] = {"Bow and Arrows", "Crossbow", "Blow Gun", "Sling", "Atlatl"};
 		switch(range){
 			case 1:
-				return names1[ranGen.nextInt(names1.length-0+1)];
+				return names1[ranGen.nextInt(names1.length)];//Random index from 0(inclusive) to array length (exclusive)
 			case 2:
-				return names2[ranGen.nextInt(names2.length-0+1)];
+				return names2[ranGen.nextInt(names2.length)];
 			case 3:
-				return names3[ranGen.nextInt(names3.length-0+1)];			
+				return names3[ranGen.nextInt(names3.length)];			
 		}	
 		return "Error";	
 	}
@@ -126,32 +126,32 @@ public class weaponGenerator {
 	
 	public static String strWeaponName(int range){
 		Random ranGen = new Random();
-		String names1[] = {"Axe", "Club","Hammer"};
-		String names2[] = {"Sword","Pike","Spear","Scimitar","Lance"};
-		String names3[] = {"Javalin","Throwing Axe"};
+		String names1[] = {"Axe", "Club", "Hammer", "Sword", "Scimitar"};
+		String names2[] = {"Pike", "Spear", "Lance", "Claymore", "Halberd"};
+		String names3[] = {"Javelin", "Throwing Axe", "Boomerang", "Bolas", "Chakram"};
 		switch(range){
 			case 1:
-				return names1[ranGen.nextInt(names1.length-0+1)];
+				return names1[ranGen.nextInt(names1.length)];
 			case 2:
-				return names2[ranGen.nextInt(names2.length-0+1)];
+				return names2[ranGen.nextInt(names2.length)];
 			case 3:
-				return names3[ranGen.nextInt(names3.length-0+1)];			
+				return names3[ranGen.nextInt(names3.length)];			
 		}	
 		return "Error";	
 	}
 	
 	public static String intelWeaponName(int range){
 		Random ranGen = new Random();
-		String names1[] = {"Staff","Magic Necklace"};
-		String names2[] = {"Wand","Magic Ring"};
-		String names3[] = {"Magic Ball","Magic Gloves"};
+		String names1[] = {"Staff", "Magic Necklace", "Spell: Frozen Hand", "Spell: Shockwave", "Spell: Flame Cloak"};
+		String names2[] = {"Wand", "Magic Ring", "Spell: Burning Gaze", "Spell: Ice Ring", "Spell: Rock Fall"};
+		String names3[] = {"Magic Ball", "Magic Gloves", "Spell: Fireball", "Spell: Wind Blast", "Spell: Earth burst"};
 		switch(range){
 			case 1:
-				return names1[ranGen.nextInt(names1.length-0+1)];
+				return names1[ranGen.nextInt(names1.length)];
 			case 2:
-				return names2[ranGen.nextInt(names2.length-0+1)];
+				return names2[ranGen.nextInt(names2.length)];
 			case 3:
-				return names3[ranGen.nextInt(names3.length-0+1)];			
+				return names3[ranGen.nextInt(names3.length)];			
 		}	
 		return "Error";	
 	}
