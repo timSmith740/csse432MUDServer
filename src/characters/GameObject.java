@@ -112,6 +112,9 @@ public abstract class GameObject {
 		// TODO Auto-generated method stub
 		return this.armor;
 	}
+	public void setArmor(int value){
+		this.armor = value;
+	}
 	@Override
 	public String toString(){
 		return this.getName();

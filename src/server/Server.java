@@ -15,6 +15,7 @@ import characters.Container;
 import characters.ShopKeeper;
 import fileHandlers.ContainerLoader;
 import fileHandlers.DoorLoader;
+import fileHandlers.AccountLoader;
 import fileHandlers.AccountSaver;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
@@ -54,9 +55,10 @@ public class Server {
 		this.containers = new HashMap<Container, Point>();
 		this.loggedOn = new ArrayList<Account>();
 		this.loggedOff = new ArrayList<Account>();
-		
 		ContainerLoader containerLoader = new ContainerLoader(this.theWorld, this.containers);
 		containerLoader.fill();
+		AccountLoader accountLoader = new AccountLoader();
+		accountLoader.loadAccounts(this.users, this.theWorld, this.accounts);
 		
 		List<String> dialogue = new ArrayList<>();
 		dialogue.add("What's up");

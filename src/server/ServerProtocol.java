@@ -366,6 +366,7 @@ public class ServerProtocol {
 	}
 	
 	public static Account findAccount(String user, ArrayList<Account> users){
+		System.out.println(users.toString());
 		for (Account current : users){
 			if (current.username.equals(user)){
 				return current;

@@ -7,6 +7,10 @@ public class Account {
 	String password;
 	Player character;
 	
+	public Account(){
+		
+	}
+	
 	public Account(String user, String pass){
 		this.username = user;
 		this.password = pass;
@@ -26,5 +30,13 @@ public class Account {
 	
 	public String getPass(){
 		return password;
+	}
+	
+	public void addPass(String pass){
+		this.password = pass;
+	}
+	
+	public void addUser(String user){
+		this.username = user;
 	}
 }

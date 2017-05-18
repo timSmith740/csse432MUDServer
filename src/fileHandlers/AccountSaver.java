@@ -67,7 +67,7 @@ public class AccountSaver implements Runnable {
 					ArrayList<Item> inventory = player.getInventory();
 					ArrayList<String> keys = player.getKeys();
 					if (keys.isEmpty()){
-						bw.write(" \n");
+						bw.write("\n");
 					} else{
 						for (int i = 0; i < keys.size(); i++){
 							bw.write(keys.get(i));
@@ -76,7 +76,7 @@ public class AccountSaver implements Runnable {
 						bw.write("\n");
 					}
 					if (inventory.isEmpty()){
-						bw.write(" \n");
+						bw.write("\n");
 					} else {
 						for (int i = 0; i < inventory.size(); i++){
 							Weapon item = (Weapon) inventory.get(i);
@@ -94,7 +94,7 @@ public class AccountSaver implements Runnable {
 						bw.write(" \n");
 					}
 					if (equipment.isEmpty()){
-						bw.write(" \n");
+						bw.write("\n");
 					} else {
 						for (int i = 0; i < equipment.size(); i++){
 							Weapon item = (Weapon) equipment.get(i);

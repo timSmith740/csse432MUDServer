@@ -84,8 +84,16 @@ public abstract class GameCharacter extends GameObject{
 		return this.health;
 	}
 	
+	public void setCurrentHealth(int value){
+		this.health = value;
+	}
+	
 	public int getTotalHealth(){
 		return this.totalHealth;
+	}
+	
+	public void setTotalHealth(int value){
+		this.totalHealth = value;
 	}
 	
 }

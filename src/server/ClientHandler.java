@@ -103,6 +103,7 @@ public class ClientHandler implements Runnable {
 							this.loggedIn = false;
 							break command;
 						}
+						System.out.println(foundAccount);
 						this.player = foundAccount.getCharacter();
 						this.currentUser = foundAccount;
 						this.loggedOn.add(this.currentUser);
