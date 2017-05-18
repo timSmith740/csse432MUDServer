@@ -19,4 +19,12 @@ public class Account {
 	public Player getCharacter(){
 		return this.character;
 	}
+	
+	public String getUsername(){
+		return username;
+	}
+	
+	public String getPass(){
+		return password;
+	}
 }

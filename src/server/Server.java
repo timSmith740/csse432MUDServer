@@ -15,6 +15,7 @@ import characters.Container;
 import characters.ShopKeeper;
 import fileHandlers.ContainerLoader;
 import fileHandlers.DoorLoader;
+import fileHandlers.AccountSaver;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
 import items.Weapon;
@@ -47,9 +48,7 @@ public class Server {
 		DoorLoader doorLoader = new DoorLoader(theWorld);
 		doorLoader.lockDoors();
 		this.theWorld = new GameMap(theWorld);
-		Account test = new Account("tester", "test");
 		this.users = new ArrayList<Account>();
-		this.users.add(test);
 		this.accounts = new HashMap<String, String>();
 		this.accounts.put("tester", "test");
 		this.containers = new HashMap<Container, Point>();
@@ -77,6 +76,9 @@ public class Server {
 			WorldUpdater updater = new WorldUpdater(this.theWorld, this.containers);
 			Thread updateRunner = new Thread(updater);
 			updateRunner.start();
+			AccountSaver saver = new AccountSaver(this.users);
+			Thread accountSaver = new Thread(saver);
+			accountSaver.start();
 			System.out.println("Server running on port: "+Port);
 		}catch(Exception e){
 			e.printStackTrace();

@@ -116,5 +116,9 @@ public abstract class GameObject {
 	public String toString(){
 		return this.getName();
 	}
+	
+	public ArrayList<Item> getEquiped(){
+		return this.Equiped;
+	}
 }
  

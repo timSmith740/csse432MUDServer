@@ -80,4 +80,12 @@ public abstract class GameCharacter extends GameObject{
 		this.keys.add(key);
 	}
 	
+	public int getCurrentHealth(){
+		return this.health;
+	}
+	
+	public int getTotalHealth(){
+		return this.totalHealth;
+	}
+	
 }
