@@ -6,14 +6,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import characters.Player;
+import characters.CommonFolk;
 import characters.Container;
-import characters.GameCharacter;
+import characters.ShopKeeper;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
 import items.Weapon;
@@ -61,6 +60,15 @@ public class Server {
 		Point chestPoint = new Point(3,2);
 		containers.put(chest, chestPoint);
 		this.theWorld.AddGameObjectAtLocation(chest, chestPoint);
+		List<String> dialogue = new ArrayList<>();
+		dialogue.add("What's up");
+		dialogue.add("Hello");
+		
+		CommonFolk wilkin = new CommonFolk("Wilkin", dialogue);
+		ShopKeeper sid = new ShopKeeper("Sid Stamm", dialogue);
+		this.theWorld.AddGameObjectAtLocation(wilkin, new Point(2, 3));
+		this.theWorld.AddGameObjectAtLocation(sid, new Point(2, 3));
+		sid.addWares(weaponGenerator.createWeapon(1), 1);
 	}
 	
 	public void execute(){

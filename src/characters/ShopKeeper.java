@@ -8,15 +8,10 @@ import items.Gold;
 import items.Item;
 
 public class ShopKeeper extends CommonFolk {
-	private String shopIntro;
 	private Map<Item, Integer> wares = new HashMap<>();
 	
-	public ShopKeeper(String name, List<String> dialogue, String intro){
+	public ShopKeeper(String name, List<String> dialogue){
 		super(name, dialogue);
-		this.shopIntro = intro;
-	}
-	public String getShopIntro(){
-		return this.shopIntro;
 	}
 	public void addWares(Item item, int cost){
 		this.wares.put(item, new Integer(cost));
