@@ -14,6 +14,7 @@ public abstract class GameCharacter extends GameObject{
 	public int armor=0;
 	public int health=0;
 	public int totalHealth=1;
+	ArrayList<String> keys = new ArrayList<String>();
 	public GameCharacter() {
 		super("Player");
 	//	equipment = new ArrayList<Equipment>();
@@ -71,5 +72,12 @@ public abstract class GameCharacter extends GameObject{
 		return intel+dex;
 	}
 
+	public ArrayList<String> getKeys(){
+		return this.keys;
+	}
+	
+	public void addKey(String key){
+		this.keys.add(key);
+	}
 	
 }

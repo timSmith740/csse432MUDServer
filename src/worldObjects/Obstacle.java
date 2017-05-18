@@ -29,8 +29,9 @@ public class Obstacle extends WorldObject {
 		this.key = item;
 	}
 	
-	public boolean canPass(Player character){
-		if (this.passable){
+	@Override
+	public boolean canPass(GameCharacter character){
+		if (key.isEmpty()){
 			return true;
 		} else {
 			if (character.getKeys().contains(this.key)){
