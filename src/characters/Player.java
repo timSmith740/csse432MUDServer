@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 public class Player extends GameCharacter {
 	
-	ArrayList<String> keys;
 	//joe Method
 	public Player(){
-		this.keys = new ArrayList<String>();
 	}
 	
 	
@@ -31,9 +29,5 @@ public class Player extends GameCharacter {
 				this.intel++;
 				break;
 		}
-	}
-	
-	public ArrayList<String> getKeys(){
-		return this.keys;
 	}
 }
