@@ -3,7 +3,7 @@ package worldObjects;
 import characters.GameCharacter;
 
 public class WorldObject {
-	private boolean passable;
+	boolean passable;
 	
 	public WorldObject(boolean passable){
 		this.passable=passable;
