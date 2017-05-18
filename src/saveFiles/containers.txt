@@ -1,7 +1,7 @@
-chest 1 true 5 1
-chest 4 true 5 2
-chest 7 true 5 3
-chest 10 true 5 4
+chest 3 true 5 1
+chest 6 true 5 2
+chest 9 true 5 3
+chest 12 true 5 4
 bookshelf 1 false 1 2
 chest 1 true 1 16
 chest 1 true 7 3

@@ -27,11 +27,13 @@ public class weaponGenerator {
 		case 8:
 		case 9: 
 			damage = ranGen.nextInt(11-7+1)+7;
+			break;
 		case 10:
 		case 11:
 		case 12:
 			damage= ranGen.nextInt(16-9+1)+9;
-			default:
+			break;
+		default:
 				damage = 0;
 		}
 		

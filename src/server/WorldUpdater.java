@@ -46,31 +46,31 @@ public class WorldUpdater implements Runnable {
 		Random ranGen = new Random();
 		switch(level){
 		case 1:
-			Weapon sword = weaponGenerator.createWeapon(1);
+			Weapon sword = weaponGenerator.createWeapon(3);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(2)+1;
 				container.addToInventory(new Gold(goldAmount));
 			}
 			break;
-		case 2:
-			sword = weaponGenerator.createWeapon(4);
+		case 6:
+			sword = weaponGenerator.createWeapon(6);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(4)+1;
 				container.addToInventory(new Gold(goldAmount));
 			}
 			break;
-		case 3:
-			sword = weaponGenerator.createWeapon(7);
+		case 9:
+			sword = weaponGenerator.createWeapon(9);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(9)+2;
 				container.addToInventory(new Gold(goldAmount));
 			}
 			break;
-		case 4:
-			sword = weaponGenerator.createWeapon(10);
+		case 12:
+			sword = weaponGenerator.createWeapon(12);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(12)+4;
