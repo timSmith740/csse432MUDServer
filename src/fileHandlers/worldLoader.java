@@ -28,7 +28,7 @@ public class worldLoader {
 						map[x][y] = new WorldObject(true);
 						break;
 					case 'D':
-						map[x][y] = new Obstacle();
+						map[x][y] = new Obstacle(true);
 						break;
 					case ' ':
 						map[x][y] = new WorldObject(false); //Can change

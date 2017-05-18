@@ -46,7 +46,7 @@ public class GameMap {
 	}
 	
 	public boolean checkMove(GameCharacter character, Point destination){
-		WorldObject atLocation = this.worldGrid[destination.x][destination.y];
+		WorldObject atLocation = this.worldGrid[destination.y][destination.x];
 		return (atLocation!=null&&atLocation.canPass(character));
 	}
 	
@@ -89,7 +89,7 @@ public class GameMap {
 			default:
 				return false;
 			}
-			WorldObject atLocation = this.worldGrid[nextLocation.x][nextLocation.y];
+			WorldObject atLocation = this.worldGrid[nextLocation.y][nextLocation.x];
 			
 			if(!atLocation.canPass(character)){
 				return false;

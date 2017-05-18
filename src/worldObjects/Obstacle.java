@@ -3,6 +3,7 @@ package worldObjects;
 import java.util.List;
 
 import characters.GameCharacter;
+import characters.Player;
 import items.Item;
 
 /*temporay change to nonabstract*/
@@ -17,13 +18,30 @@ public class Obstacle extends WorldObject {
 		super(false);
 	}
 
-	private List<Item> keys;
+	private String key;
+	/*private List<Item> keys;
 	
 	public boolean isKey(Item item){
 		return this.keys.contains(item);
+	}*/
+	
+	public void addKey(String item){
+		this.key = item;
 	}
 	
-	@Override
+	public boolean canPass(Player character){
+		if (this.passable){
+			return true;
+		} else {
+			if (character.getKeys().contains(this.key)){
+				return true;
+			} else{
+				return false;
+			}
+		}
+	}
+	
+	/*@Override
 	public boolean canPass(GameCharacter character){
 		for(Item item : character.getInventory()){
 			if(isKey(item)){
@@ -31,6 +49,6 @@ public class Obstacle extends WorldObject {
 			}
 		}
 		return false;
-	}
+	}*/
 
 }
