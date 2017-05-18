@@ -13,6 +13,7 @@ import java.util.Map;
 import characters.CommonFolk;
 import characters.Container;
 import characters.ShopKeeper;
+import fileHandlers.ContainerLoader;
 import fileHandlers.DoorLoader;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
@@ -55,15 +56,8 @@ public class Server {
 		this.loggedOn = new ArrayList<Account>();
 		this.loggedOff = new ArrayList<Account>();
 		
-		Container chest = new Container("Joe's Box", 1);
-		for(int counter=0; counter<2; counter++){
-			Weapon sword = weaponGenerator.createWeapon(1);
-			chest.addToInventory(sword);
-		}
-		System.out.println(chest.getInvString());
-		Point chestPoint = new Point(3,2);
-		containers.put(chest, chestPoint);
-		this.theWorld.AddGameObjectAtLocation(chest, chestPoint);
+		ContainerLoader containerLoader = new ContainerLoader(this.theWorld, this.containers);
+		containerLoader.fill();
 		
 		List<String> dialogue = new ArrayList<>();
 		dialogue.add("What's up");
