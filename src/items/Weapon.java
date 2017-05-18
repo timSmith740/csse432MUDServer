@@ -55,5 +55,17 @@ public class Weapon extends Equipment {
 	public String toString(){
 		return this.name+": "+this.damage;
 	}
+	
+	public int getDamageValue(){
+		return this.damage;
+	}
+	
+	public int getLevel(){
+		return this.level;
+	}
+	
+	public int getWeaponType(){
+		return this.type;
+	}
 
 }

@@ -112,8 +112,8 @@ public class weaponGenerator {
 	public static String dexWeaponName(int range){
 		Random ranGen = new Random();
 		String names1[] = {"Dagger", "Sickle", "Claws", "Rapier", "Swordstaff"};
-		String names2[] = {"Darts", "Whip", "Throwing Stars", "Throwing Knives", "Chainwhip"};
-		String names3[] = {"Bow and Arrows", "Crossbow", "Blow Gun", "Sling", "Atlatl"};
+		String names2[] = {"Darts", "Whip", "ThrowingStars", "ThrowingKnives", "Chainwhip"};
+		String names3[] = {"BowAndArrows", "Crossbow", "BlowGun", "Sling", "Atlatl"};
 		switch(range){
 			case 1:
 				return names1[ranGen.nextInt(names1.length)];//Random index from 0(inclusive) to array length (exclusive)
@@ -130,7 +130,7 @@ public class weaponGenerator {
 		Random ranGen = new Random();
 		String names1[] = {"Axe", "Club", "Hammer", "Sword", "Scimitar"};
 		String names2[] = {"Pike", "Spear", "Lance", "Claymore", "Halberd"};
-		String names3[] = {"Javelin", "Throwing Axe", "Boomerang", "Bolas", "Chakram"};
+		String names3[] = {"Javelin", "ThrowingAxe", "Boomerang", "Bolas", "Chakram"};
 		switch(range){
 			case 1:
 				return names1[ranGen.nextInt(names1.length)];
@@ -144,9 +144,9 @@ public class weaponGenerator {
 	
 	public static String intelWeaponName(int range){
 		Random ranGen = new Random();
-		String names1[] = {"Staff", "Magic Necklace", "Spell: Frozen Hand", "Spell: Shockwave", "Spell: Flame Cloak"};
-		String names2[] = {"Wand", "Magic Ring", "Spell: Burning Gaze", "Spell: Ice Ring", "Spell: Rock Fall"};
-		String names3[] = {"Magic Ball", "Magic Gloves", "Spell: Fireball", "Spell: Wind Blast", "Spell: Earth burst"};
+		String names1[] = {"Staff", "MagicNecklace", "Spell-FrozenHand", "Spell-Shockwave", "Spell-FlameCloak"};
+		String names2[] = {"Wand", "MagicRing", "Spell-BurningGaze", "Spell-IceRing", "Spell-RockFall"};
+		String names3[] = {"MagicBall", "MagicGloves", "Spell-Fireball", "Spell-WindBlast", "Spell-EarthBurst"};
 		switch(range){
 			case 1:
 				return names1[ranGen.nextInt(names1.length)];

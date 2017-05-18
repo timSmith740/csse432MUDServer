@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import characters.Container;
 import characters.Player;
 import items.Item;
+import items.Weapon;
 import server.Account;
 
 public class AccountSaver implements Runnable {
@@ -65,6 +66,51 @@ public class AccountSaver implements Runnable {
 					ArrayList<Item> equipment = player.getEquiped();
 					ArrayList<Item> inventory = player.getInventory();
 					ArrayList<String> keys = player.getKeys();
+					if (keys.isEmpty()){
+						bw.write(" \n");
+					} else{
+						for (int i = 0; i < keys.size(); i++){
+							bw.write(keys.get(i));
+							bw.write(" ");
+						}
+						bw.write("\n");
+					}
+					if (inventory.isEmpty()){
+						bw.write(" \n");
+					} else {
+						for (int i = 0; i < inventory.size(); i++){
+							Weapon item = (Weapon) inventory.get(i);
+							String itemName = item.getName();
+							int damage = item.getDamageValue();
+							int type = item.getWeaponType();
+							int range =  item.getRange();
+							int hit = item.getAttackBonus();
+							int level = item.getLevel();
+							String itemInfo = itemName +":"+ Integer.toString(damage)
+							+":"+ Integer.toString(type) +":"+ Integer.toString(range)
+							+":"+ Integer.toString(hit) +":"+ Integer.toString(level)+" ";
+							bw.write(itemInfo);
+						}
+						bw.write(" \n");
+					}
+					if (equipment.isEmpty()){
+						bw.write(" \n");
+					} else {
+						for (int i = 0; i < equipment.size(); i++){
+							Weapon item = (Weapon) equipment.get(i);
+							String itemName = item.getName();
+							int damage = item.getDamageValue();
+							int type = item.getWeaponType();
+							int range =  item.getRange();
+							int hit = item.getAttackBonus();
+							int level = item.getLevel();
+							String itemInfo = itemName +":"+ Integer.toString(damage)
+							+":"+ Integer.toString(type) +":"+ Integer.toString(range)
+							+":"+ Integer.toString(hit) +":"+ Integer.toString(level)+" ";
+							bw.write(itemInfo);
+						}
+						bw.write(" \n");
+					}
 				}
 				bw.close();
 				System.out.println("Finished Saving");
