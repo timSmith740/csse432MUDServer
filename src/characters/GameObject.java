@@ -55,7 +55,7 @@ public abstract class GameObject {
 	
 	public void removeFromInventory(Item item){
 		if(item.getClass().equals(Gold.class)){
-			this.gold.add((Gold) item);
+			this.gold.subtract((Gold) item);
 		}
 		else{
 			this.Inventory.remove(item);
