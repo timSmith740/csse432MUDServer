@@ -222,7 +222,26 @@ public class ServerProtocol {
 			
 		case "gold":
 			return (Integer.toString(player.getGoldAmount()) + " Gold");
-			
+		case "shop":
+			if(subparts.length==3){
+				List<GameObject> gameObjects = map.checkForObjects(player);
+				String shopName = subparts[2];
+				ShopKeeper shop = null;
+				for(GameObject o : gameObjects){
+					if(o.getName().equals(shopName)){
+						if(o.getClass().equals(ShopKeeper.class)){
+							shop = (ShopKeeper) o;
+							break;
+						}
+						return INVALID_TARGET;
+					}
+				}
+				if(shop==null){
+					return INVALID_TARGET;
+				}
+				return shop.purchaseItem(subparts[2], player);
+			}
+			return INVALID_SYNTAX;
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
 		}

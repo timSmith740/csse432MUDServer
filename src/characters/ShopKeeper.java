@@ -44,9 +44,8 @@ public class ShopKeeper extends CommonFolk {
 	}
 	public String getWaresString() {
 		StringBuilder sb = new StringBuilder();
-		int i =1;
-		for(Item item : wares.keySet()){
-			sb.append(i+": "+ item.getName()+" - "+wares.get(item)+"; ");
+		for(Item item : this.wares.keySet()){
+			sb.append(item.getName()+" - "+this.wares.get(item)+"; ");
 		}
 		sb.append("\n");
 		return sb.toString();
