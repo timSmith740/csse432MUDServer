@@ -17,7 +17,7 @@ public class CommonFolk extends NPC {
 	
 	public String talk(){
 		if(this.currentResponse>=this.dialogue.size()){
-			this.currentResponse = -1;
+			this.currentResponse = 0;
 		}
 		String response = this.dialogue.get(this.currentResponse);
 		this.currentResponse++;

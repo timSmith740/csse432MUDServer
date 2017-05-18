@@ -35,14 +35,13 @@ public class ShopKeeper extends CommonFolk {
 		p.removeFromInventory(new Gold(price));
 		this.wares.remove(item);
 		p.addToInventory(item);
-		return "Excellent choice! That "+ itemName+" will treat you well!\n";
+		return "Excellent choice! That "+ itemName+" will treat you well!";
 	}
 	public String getWaresString() {
 		StringBuilder sb = new StringBuilder();
 		for(Item item : this.wares.keySet()){
-			sb.append(item.getName()+" - "+this.wares.get(item)+"; ");
+			sb.append(item.getName()+" : "+this.wares.get(item)+"; ");
 		}
-		sb.append("\n");
 		return sb.toString();
 	}
 }

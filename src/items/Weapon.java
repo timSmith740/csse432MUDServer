@@ -12,7 +12,6 @@ public class Weapon extends Equipment {
 	public int range; 
 	public int hit;
 	public int level; 
-	public String name;
 	
 	public Weapon(int damage, int type, int range, int hit,int level, String name){
 		this.damage=damage;

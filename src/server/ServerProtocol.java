@@ -158,7 +158,7 @@ public class ServerProtocol {
 					ShopKeeper shop = null;
 					for(GameObject o : objects){
 						if(o.getName().equals(name)){
-							if(o.getClass().equals(ShopKeeper.class)){
+							if(ShopKeeper.class.isAssignableFrom(o.getClass())){
 								shop = (ShopKeeper) o;
 								break;
 							}
@@ -206,7 +206,7 @@ public class ServerProtocol {
 			CommonFolk folk = null;
 			for(GameObject o : objects){
 				if(o.getName().equals(name)){
-					if(o.getClass().equals(CommonFolk.class)){
+					if(CommonFolk.class.isAssignableFrom(o.getClass())){
 						folk = (CommonFolk) o;
 						break;
 					}
@@ -225,11 +225,11 @@ public class ServerProtocol {
 		case "shop":
 			if(subparts.length==3){
 				List<GameObject> gameObjects = map.checkForObjects(player);
-				String shopName = subparts[2];
+				String shopName = subparts[1];
 				ShopKeeper shop = null;
 				for(GameObject o : gameObjects){
 					if(o.getName().equals(shopName)){
-						if(o.getClass().equals(ShopKeeper.class)){
+						if(ShopKeeper.class.isAssignableFrom(o.getClass())){
 							shop = (ShopKeeper) o;
 							break;
 						}
@@ -336,6 +336,10 @@ public class ServerProtocol {
 			return(null);
 		}
 		foundAccount.addCharacter(character);
+		
+		// REMOVE LATER
+		character.addToInventory(new Gold(1));
+		// REMOVE LATER
 		return(character);
 	}
 	
