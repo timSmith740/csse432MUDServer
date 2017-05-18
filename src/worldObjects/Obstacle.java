@@ -18,7 +18,7 @@ public class Obstacle extends WorldObject {
 		super(false);
 	}
 
-	private String key;
+	private String key = "";
 	/*private List<Item> keys;
 	
 	public boolean isKey(Item item){

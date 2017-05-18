@@ -1,0 +1,7 @@
+storage1 33 10
+storage1 34 10
+storage2 15 20
+storage2 16 20
+secret1 36 33
+boss1 33 40
+boss2 34 40

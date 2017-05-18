@@ -13,6 +13,7 @@ import java.util.Map;
 import characters.CommonFolk;
 import characters.Container;
 import characters.ShopKeeper;
+import fileHandlers.DoorLoader;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
 import items.Weapon;
@@ -42,6 +43,8 @@ public class Server {
 		//Load world
 		worldLoader loader = new worldLoader();
 		WorldObject[][] theWorld = loader.readFile();
+		DoorLoader doorLoader = new DoorLoader(theWorld);
+		doorLoader.lockDoors();
 		this.theWorld = new GameMap(theWorld);
 		Account test = new Account("tester", "test");
 		this.users = new ArrayList<Account>();
@@ -51,6 +54,7 @@ public class Server {
 		this.containers = new HashMap<Container, Point>();
 		this.loggedOn = new ArrayList<Account>();
 		this.loggedOff = new ArrayList<Account>();
+		
 		Container chest = new Container("Joe's Box", 1);
 		for(int counter=0; counter<2; counter++){
 			Weapon sword = weaponGenerator.createWeapon(1);
@@ -60,6 +64,7 @@ public class Server {
 		Point chestPoint = new Point(3,2);
 		containers.put(chest, chestPoint);
 		this.theWorld.AddGameObjectAtLocation(chest, chestPoint);
+		
 		List<String> dialogue = new ArrayList<>();
 		dialogue.add("What's up");
 		dialogue.add("Hello");

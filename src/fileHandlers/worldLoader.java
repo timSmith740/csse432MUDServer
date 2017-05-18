@@ -45,6 +45,7 @@ public class worldLoader {
 				lineRead = br.readLine();
 				x++;
 			}
+			br.close();
 		}
 		catch(FileNotFoundException fnfe){
 			System.out.println("File not found");
