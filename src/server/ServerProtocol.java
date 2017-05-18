@@ -12,6 +12,7 @@ import characters.CommonFolk;
 import characters.GameCharacter;
 import characters.GameObject;
 import characters.Player;
+import characters.ShopKeeper;
 import gameMap.GameMap;
 import items.Gold;
 import items.Item;
@@ -30,6 +31,7 @@ public class ServerProtocol {
 	public static int DEFAULT_PORT = 5555;
 	public static String SERVER_INFO = "localhost";
 	public static final String INVALID_SYNTAX="Incorrect Syntax";
+	public static final String INVALID_TARGET="Invalid Target";
 	
 	public enum Direction{
 		North, South, East, West
@@ -75,9 +77,8 @@ public class ServerProtocol {
 				}
 				return "You hit the object with " +result+ " points of damage.";
 				//return objects.get(position).getInventory().toString();
-			} else{
-				return(ServerProtocol.INVALID_SYNTAX);
 			}
+			return(ServerProtocol.INVALID_SYNTAX);
 
 		
 			
@@ -87,8 +88,6 @@ public class ServerProtocol {
 			return(sendback);
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
-			
-		
 			
 		case "move":
 			String sendback = "Cannot Move to that position";
@@ -151,9 +150,28 @@ public class ServerProtocol {
 					sendback = objects.get(position).getInventory().toString();
 				}
 				return sendback;
-			} else{
-				return map.checkForObjects(player).toString();
+			} 
+			else if(subparts.length == 3){
+				if(subparts[1].equals("shop")){
+					List<GameObject> objects = map.checkForObjects(player);
+					String name = subparts[2];
+					ShopKeeper shop = null;
+					for(GameObject o : objects){
+						if(o.getName().equals(name)){
+							if(o.getClass().equals(ShopKeeper.class)){
+								shop = (ShopKeeper) o;
+								break;
+							}
+							return INVALID_TARGET;
+						}
+					}
+					if(shop==null){
+						return INVALID_TARGET;
+					}
+					return shop.getWaresString();
+				}
 			}
+			return map.checkForObjects(player).toString();
 			
 		case "take":
 			if (subparts.length == 3){
@@ -170,13 +188,11 @@ public class ServerProtocol {
 						player.addToInventory(new Gold(objects.get(containerPosition).getGoldAmount()));
 						objects.get(containerPosition).removeFromInventory(new Gold(objects.get(containerPosition).getGoldAmount()));
 						return (Integer.toString(objects.get(containerPosition).getGoldAmount())+" Gold added to Inventory");
-					} else {
-						return("No item in that slot");
 					}
+					return("No item in that slot");
 				}
-			} else {
-				return(ServerProtocol.INVALID_SYNTAX );
 			}
+			return(ServerProtocol.INVALID_SYNTAX );
 			
 		case "equip":
 			int itemPosition = Integer.parseInt(subparts[1]) - 1;
@@ -194,14 +210,11 @@ public class ServerProtocol {
 						folk = (CommonFolk) o;
 						break;
 					}
-					else if(o.getClass().equals(Player.class)){
-						return "They don't seem to be listening";
-					}
-					return "That can't talk";
+					return INVALID_TARGET;
 				}
 			}
 			if(folk==null){
-				return "There is nobody here";
+				return INVALID_TARGET;
 			}
 			return folk.talk();
 		case "look":

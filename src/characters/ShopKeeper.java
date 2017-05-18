@@ -42,4 +42,13 @@ public class ShopKeeper extends CommonFolk {
 		p.addToInventory(item);
 		return "Excellent choice! That "+ itemName+" will treat you well!\n";
 	}
+	public String getWaresString() {
+		StringBuilder sb = new StringBuilder();
+		int i =1;
+		for(Item item : wares.keySet()){
+			sb.append(i+": "+ item.getName()+" - "+wares.get(item)+"; ");
+		}
+		sb.append("\n");
+		return sb.toString();
+	}
 }
