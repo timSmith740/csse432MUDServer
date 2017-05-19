@@ -4,3 +4,9 @@ Raistlin 2 2 1 1
 
 
 Atlatl:7:2:3:4:3 Scimitar:7:3:1:0:1 Axe:7:3:1:0:1  
+a a
+a 2 2 1 1
+4 4 4 2 3 1 16
+ 
+
+
