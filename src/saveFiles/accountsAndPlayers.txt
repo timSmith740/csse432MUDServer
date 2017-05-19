@@ -1,12 +1,6 @@
-tool ball
-Jon 3 5 1 13
-2 3 5 2 2 1 0
-  
-ThrowingKnives:6:2:2:1:6 Wand:7:4:2:1:6  
+logan pass
+a 2 2 1 1
+4 4 2 3 1 0 1
 
-ball test
-Bob 3 5 1 13
-5 5 5 2 2 1 0
-  
-ThrowingKnives:6:2:2:1:6 Wand:7:4:2:1:6 Spell-RockFall:7:4:2:1:9  
+
 

@@ -1,16 +1,11 @@
 package fileHandlers;
 
-import java.awt.Point;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map.Entry;
 
-import characters.Container;
 import characters.Player;
 import items.Item;
 import items.Weapon;
@@ -26,12 +21,10 @@ public class AccountSaver implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while (true) {
 			try {
 				Thread.sleep(60000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {

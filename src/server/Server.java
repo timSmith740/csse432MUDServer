@@ -2,6 +2,7 @@ package server;
 
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,13 +14,13 @@ import java.util.Map;
 import characters.CommonFolk;
 import characters.Container;
 import characters.ShopKeeper;
-import fileHandlers.ContainerLoader;
-import fileHandlers.DoorLoader;
 import fileHandlers.AccountLoader;
 import fileHandlers.AccountSaver;
+import fileHandlers.ContainerLoader;
+import fileHandlers.DoorLoader;
 import fileHandlers.worldLoader;
 import gameMap.GameMap;
-import items.Weapon;
+import gameMap.Room;
 import items.weaponGenerator;
 import worldObjects.WorldObject;
 
@@ -65,10 +66,14 @@ public class Server {
 		dialogue.add("Hello");
 		
 		CommonFolk wilkin = new CommonFolk("Wilkin", dialogue);
-		ShopKeeper sid = new ShopKeeper("Sid Stamm", dialogue);
+		ShopKeeper sid = new ShopKeeper("Sid", dialogue);
 		this.theWorld.AddGameObjectAtLocation(wilkin, new Point(2, 3));
 		this.theWorld.AddGameObjectAtLocation(sid, new Point(2, 3));
 		sid.addWares(weaponGenerator.createWeapon(1), 1);
+		List<Rectangle> squares = new ArrayList<>();
+		squares.add(new Rectangle(1, 1, 5, 5));
+		Room r = new Room(squares);
+		this.theWorld.addRoom(r);
 	}
 	
 	public void execute(){

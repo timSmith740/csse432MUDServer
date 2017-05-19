@@ -1,6 +1,7 @@
 package gameMap;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,15 +15,17 @@ import worldObjects.WorldObject;
 public class GameMap {
 	private WorldObject[][] worldGrid;
 	private Map<Point, List<GameObject>> objectMap;
+	private List<Room> rooms;
 	
 	public GameMap(WorldObject[][] worldGrid){
 		this.worldGrid = worldGrid;
 		this.objectMap = new HashMap<>();
+		this.rooms = new ArrayList<>();
 	}
 	
 	public void AddGameObjectAtLocation(GameObject obj, Point location){
 		Point objLocation = obj.getLocation();
-		if(objectMap.containsKey(objLocation)){
+		if(this.objectMap.containsKey(objLocation)){
 			this.objectMap.get(objLocation).remove(obj);
 		}
 		if(!this.objectMap.containsKey(location)){
@@ -103,9 +106,42 @@ public class GameMap {
 	}
 	
 	public List<GameObject> checkForObjects(GameCharacter character){
-		List<GameObject> storedObjects = objectMap.get(character.getLocation());
-		List<GameObject> objects = new ArrayList<GameObject>(storedObjects);
+		List<GameObject> storedObjects = this.objectMap.get(character.getLocation());
+		List<GameObject> objects = new ArrayList<>(storedObjects);
 		objects.remove(character);
 		return(objects);
+	}
+	
+	public List<GameObject> checkCurrentRoom(GameCharacter character){
+		Room r = findContainingRoom(character);
+		return checkInRoom(r);
+	}
+	
+	public Room findContainingRoom(GameObject object){
+		for(Room r : this.rooms){
+			if(r.containsObject(object)){
+				return r;
+			}
+		}
+		return null;
+	}
+	
+	public List<GameObject> checkInRoom(Room room){
+		List<GameObject> objects = new ArrayList<>();
+		for(Rectangle r : room.getBlocks()){
+			for(double i = r.getX(); i<r.getWidth(); i++){
+				for(double j = r.getY(); j<r.getHeight(); j++){
+					List<GameObject> current = this.objectMap.get(new Point((int) i, (int)j));
+					if(current!=null){
+						objects.addAll(current);
+					}
+				}
+			}
+		}
+		return objects;
+	}
+	
+	public void addRoom(Room r){
+		this.rooms.add(r);
 	}
 }

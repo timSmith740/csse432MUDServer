@@ -218,11 +218,13 @@ public class ServerProtocol {
 			}
 			return folk.talk();
 		case "look":
-			return(ServerProtocol.INVALID_SYNTAX);
+			List<GameObject> roomObjects = map.checkCurrentRoom(player);
+			roomObjects.remove(player);
+			return roomObjects.toString();
 			
 		case "gold":
-			return (Integer.toString(player.getGoldAmount()) + " Gold");
-		case "shop":
+			return player.getGoldAmount() + " Gold";
+		case "buy":
 			if(subparts.length==3){
 				List<GameObject> gameObjects = map.checkForObjects(player);
 				String shopName = subparts[1];
