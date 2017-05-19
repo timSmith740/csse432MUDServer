@@ -2,7 +2,6 @@ package server;
 
 
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,6 +17,7 @@ import fileHandlers.AccountLoader;
 import fileHandlers.AccountSaver;
 import fileHandlers.ContainerLoader;
 import fileHandlers.DoorLoader;
+import fileHandlers.RoomLoader;
 import fileHandlers.WorldLoader;
 import gameMap.GameMap;
 import gameMap.Room;
@@ -46,16 +46,20 @@ public class Server {
 		this.Port=Port;
 		//Load world
 		WorldLoader loader = new WorldLoader();
-		WorldObject[][] theWorld = loader.readFile();
-		DoorLoader doorLoader = new DoorLoader(theWorld);
+		WorldObject[][] world = loader.readFile();
+		DoorLoader doorLoader = new DoorLoader(world);
 		doorLoader.lockDoors();
-		this.theWorld = new GameMap(theWorld);
-		this.users = new ArrayList<Account>();
-		this.accounts = new HashMap<String, String>();
+		
+		RoomLoader roomLoader = new RoomLoader();
+		List<Room> rooms = roomLoader.readFile();
+		
+		this.theWorld = new GameMap(world, rooms);
+		this.users = new ArrayList<>();
+		this.accounts = new HashMap<>();
 		this.accounts.put("tester", "test");
-		this.containers = new HashMap<Container, Point>();
-		this.loggedOn = new ArrayList<Account>();
-		this.loggedOff = new ArrayList<Account>();
+		this.containers = new HashMap<>();
+		this.loggedOn = new ArrayList<>();
+		this.loggedOff = new ArrayList<>();
 		ContainerLoader containerLoader = new ContainerLoader(this.theWorld, this.containers);
 		containerLoader.fill();
 		AccountLoader accountLoader = new AccountLoader();
@@ -70,10 +74,6 @@ public class Server {
 		this.theWorld.AddGameObjectAtLocation(wilkin, new Point(2, 3));
 		this.theWorld.AddGameObjectAtLocation(sid, new Point(2, 3));
 		sid.addWares(weaponGenerator.createWeapon(1), 1);
-		List<Rectangle> squares = new ArrayList<>();
-		squares.add(new Rectangle(1, 1, 5, 5));
-		Room r = new Room(squares);
-		this.theWorld.addRoom(r);
 	}
 	
 	public void execute(){

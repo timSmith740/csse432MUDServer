@@ -17,10 +17,10 @@ public class GameMap {
 	private Map<Point, List<GameObject>> objectMap;
 	private List<Room> rooms;
 	
-	public GameMap(WorldObject[][] worldGrid){
+	public GameMap(WorldObject[][] worldGrid, List<Room> rooms){
 		this.worldGrid = worldGrid;
 		this.objectMap = new HashMap<>();
-		this.rooms = new ArrayList<>();
+		this.rooms = rooms;
 	}
 	
 	public void AddGameObjectAtLocation(GameObject obj, Point location){
