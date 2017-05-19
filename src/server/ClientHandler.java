@@ -89,7 +89,8 @@ public class ClientHandler implements Runnable {
 					this.currentUser = foundAccount;
 					this.loggedOn.add(this.currentUser);
 					this.loggedOff.remove(this.currentUser);
-					this.out.write("Logged on".getBytes());
+					String myString = ServerProtocol.update(player,"Logged on");
+					this.out.write(myString.getBytes());
 					break command;
 				}
 				if (this.loggedIn == false){
