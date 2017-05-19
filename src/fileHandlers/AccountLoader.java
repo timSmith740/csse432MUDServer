@@ -2,10 +2,8 @@ package fileHandlers;
 
 import java.awt.Point;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +11,6 @@ import java.util.HashMap;
 import characters.Player;
 import gameMap.GameMap;
 import items.Gold;
-import items.Item;
 import items.Weapon;
 import server.Account;
 
@@ -73,11 +70,13 @@ public class AccountLoader {
 					}
 					for(int i = 0; i < subarray.length; i++){
 						String[] itemArray = subarray[i].split(":");
-						Weapon weapon = new Weapon(Integer.parseInt(itemArray[1]),
-								Integer.parseInt(itemArray[2]), Integer.parseInt(itemArray[3]),
-								Integer.parseInt(itemArray[4]), Integer.parseInt(itemArray[5]),
-								itemArray[0]);
-						player.addToInventory(weapon);
+						if (itemArray.length == 6){
+							Weapon weapon = new Weapon(Integer.parseInt(itemArray[1]),
+									Integer.parseInt(itemArray[2]), Integer.parseInt(itemArray[3]),
+									Integer.parseInt(itemArray[4]), Integer.parseInt(itemArray[5]),
+									itemArray[0]);
+							player.addToInventory(weapon);
+						}
 					}
 					break;
 				case 5:

@@ -22,8 +22,12 @@ public class RoomLoader {
 				for(String b : blocks){
 					System.out.println(b);
 					String[] coord = b.split(" ");
-					Rectangle rect =new Rectangle(Integer.parseInt(coord[0]), Integer.parseInt(coord[1]),
-							Integer.parseInt(coord[2]), Integer.parseInt(coord[3]));
+					int x = Integer.parseInt(coord[0]);
+					int y = Integer.parseInt(coord[1]);
+					int width = Integer.parseInt(coord[2])-x;
+					int height = Integer.parseInt(coord[3])-y;
+					
+					Rectangle rect =new Rectangle(x, y, width, height);
 					r.addBlock(rect);
 					lineRead = br.readLine();
 				}
