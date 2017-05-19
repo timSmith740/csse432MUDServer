@@ -26,7 +26,7 @@ public class Weapon extends Equipment {
 		return range;
 	}
 	
-	public int GetDammage(GameCharacter character){
+	public int getDamage(GameCharacter character){
 //		System.out.println(this.dex+" "+this.str+" "+this.intel);
 //		System.out.println(character.getStat("dex")+" "+character.getStat("str")+" "+character.getStat("intel"));
 //		int damage =getMin(this.str,character.getStat("str"))+getMin(this.dex,character.getStat("dex"))+getMin(this.intel,character.getStat("intel"));

@@ -6,12 +6,13 @@ import java.util.Map;
 
 import items.Gold;
 import items.Item;
+import items.Weapon;
 
 public class ShopKeeper extends CommonFolk {
 	private Map<Item, Integer> wares = new HashMap<>();
 	
-	public ShopKeeper(String name, List<String> dialogue){
-		super(name, dialogue);
+	public ShopKeeper(String name, List<String> dialogue, Weapon weapon){
+		super(name, dialogue, weapon);
 	}
 	public void addWares(Item item, int cost){
 		this.wares.put(item, new Integer(cost));

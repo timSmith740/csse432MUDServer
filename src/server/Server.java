@@ -69,8 +69,10 @@ public class Server {
 		dialogue.add("What's up");
 		dialogue.add("Hello");
 		
-		CommonFolk wilkin = new CommonFolk("Wilkin", dialogue);
-		ShopKeeper sid = new ShopKeeper("Sid", dialogue);
+		CommonFolk wilkin = new CommonFolk("Wilkin", dialogue, weaponGenerator.createWeapon(1));
+		wilkin.setStats(1, 1, 1, 1);
+		ShopKeeper sid = new ShopKeeper("Sid", dialogue, weaponGenerator.createWeapon(1));
+		sid.setStats(1, 1, 1, 1);
 		this.theWorld.AddGameObjectAtLocation(wilkin, new Point(2, 3));
 		this.theWorld.AddGameObjectAtLocation(sid, new Point(2, 3));
 		sid.addWares(weaponGenerator.createWeapon(1), 1);

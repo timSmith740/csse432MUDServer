@@ -69,14 +69,42 @@ public class ServerProtocol {
 			if (subparts.length == 3){
 				int position = Integer.parseInt(subparts[1]) - 1;
 				List<GameObject> objects = map.checkForObjects(player);
-				GameObject defender = objects.get(position);
-				Weapon attackingWeapon= (Weapon) player.getEquiped(Integer.parseInt(subparts[2]) - 1);
-				int result = determineAttack(player,defender,attackingWeapon);
-				if(result==0){
-					return "You missed the object";
+				GameObject defendObject = objects.get(position);
+				if(!GameCharacter.class.isAssignableFrom(defendObject.getClass())){
+					return "You can't attack an object!";
 				}
-				return "You hit the object with " +result+ " points of damage.";
-				//return objects.get(position).getInventory().toString();
+				if(Player.class.isAssignableFrom(defendObject.getClass())){
+					return "You can't attack another adventurer!";
+				}
+				GameCharacter defender = (GameCharacter) defendObject;
+				Weapon attackingWeapon= (Weapon) player.getEquiped(Integer.parseInt(subparts[2]) - 1);
+				int damage = determineAttack(player,defender,attackingWeapon);
+				
+				StringBuilder result = new StringBuilder();
+				if(damage == 0){
+					result.append("You missed "+defender.getName()+"!\n");
+				}
+				else{
+					result.append("You hit " +defender.getName()+ " for " +damage+ " points of damage.\n");
+					defender.dealDamage(damage);
+				}
+				if(CommonFolk.class.isAssignableFrom(defendObject.getClass())){
+					CommonFolk npc = (CommonFolk) defendObject;
+					npc.addToHostile(player);
+				}
+				if(!defender.isAlive()){
+					result.append(defender.getName()+" died!\n");
+				}
+				else{
+					int npcDamage =determineAttack(defender, player, defender.getWeapon());
+					if(npcDamage==0){
+						result.append(defender.getName()+" attempted to attack you and missed!");
+					}
+					else{
+						result.append(defender.getName()+ " attacked you for "+ npcDamage+ " points of damage");
+					}
+				}				
+				return result.toString();
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
 	
@@ -214,7 +242,7 @@ public class ServerProtocol {
 			if(folk==null){
 				return INVALID_TARGET;
 			}
-			return folk.talk();
+			return folk.talk(player);
 		case "look":
 			List<GameObject> roomObjects = map.checkCurrentRoom(player);
 			roomObjects.remove(player);
@@ -343,10 +371,9 @@ public class ServerProtocol {
 		return(character);
 	}
 	
-	public static int determineAttack(GameCharacter character,GameObject defense, Weapon attackingWeapon){
+	public static int determineAttack(GameCharacter character,GameCharacter defense, Weapon attackingWeapon){
 		int playerAttack = character.getAttackBonus()+attackingWeapon.getAttackBonus();
 		int defender = defense.getArmor();
-		
 		
 		//Need to modify
 		int max = playerAttack+defender;
@@ -355,7 +382,7 @@ public class ServerProtocol {
 		Random ranGen = new Random();
 		int result = ranGen.nextInt(max-min+1)+min;
 		if(result>=defender){
-			int damage= attackingWeapon.GetDammage(character);
+			int damage= attackingWeapon.getDamage(character);
 	
 			return damage;
 		}

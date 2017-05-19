@@ -17,11 +17,8 @@ public abstract class GameCharacter extends GameObject{
 	ArrayList<String> keys = new ArrayList<String>();
 	public GameCharacter() {
 		super("Player");
-	//	equipment = new ArrayList<Equipment>();
-	//	weapons = new ArrayList<Weapon>();
-		// TODO Auto-generated constructor stub
 	}
-	private List<Weapon> weapons;
+	protected Weapon weapon;
 	public List<Equipment> equipment;
 	
 	public int getStat(String stat){
@@ -60,7 +57,7 @@ public abstract class GameCharacter extends GameObject{
 	public String characterStats(){
 		//1 ,2 ,3, 4 is a filler for missing stat
 		//name health health/health ac armor strength con int dex
-		return "&S:"+this.name+":"+this.health+":"+this.totalHealth+":"+armor +":"+str+":"+con+":"+intel+":"+dex;
+		return "&S:"+this.name+":"+this.health+":"+this.totalHealth+":"+this.armor +":"+this.str+":"+this.con+":"+this.intel+":"+this.dex;
 	}
 	
 	//Joe Method
@@ -69,7 +66,7 @@ public abstract class GameCharacter extends GameObject{
 	}
 
 	public int getAttackBonus() {
-		return intel+dex;
+		return this.intel+this.dex;
 	}
 
 	public ArrayList<String> getKeys(){
@@ -94,6 +91,26 @@ public abstract class GameCharacter extends GameObject{
 	
 	public void setTotalHealth(int value){
 		this.totalHealth = value;
+	}
+	
+	public void dealDamage(int value){
+		this.health -= value;
+	}
+	
+	public boolean isAlive(){
+		return this.health>0;
+	}
+
+	public Weapon getWeapon() {
+		return this.weapon;
+	}
+	
+	@Override
+	public String getName() {
+		if(!this.isAlive()){
+			return this.name+"'s corpse";
+		}
+		return this.name;
 	}
 	
 }
