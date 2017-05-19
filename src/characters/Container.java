@@ -16,7 +16,7 @@ public class Container extends GameObject {
 		return name;
 	}
 	
-	public boolean isEmpy(){
+	public boolean isEmpty(){
 		return this.inventory.isEmpty();
 	}
 	

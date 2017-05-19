@@ -30,18 +30,19 @@ public class AccountSaver implements Runnable {
 			try {
 				System.out.println("Start saving");
 				BufferedWriter bw = new BufferedWriter(new FileWriter("src/saveFiles/accountsAndPlayers.txt", false));
-				for (Account current : accounts) {
+				for (Account current : this.accounts) {
 					String accountInfo = current.getUsername() + " " + current.getPass() + "\n";
 					bw.write(accountInfo);
 					Player player = current.getCharacter();
 					String name = player.getName();
 					int xLocation = player.getLocation().x;
 					int yLocation = player.getLocation().y;
+					int respawnX = player.getRespawnLocation().x;
+					int respawnY = player.getRespawnLocation().y;
 					int armor = player.getArmor();
 					int gold = player.getGoldAmount();
-					String playerInfo = name + " "+Integer.toString(xLocation)+
-							" "+Integer.toString(yLocation)+" "+Integer.toString(armor)+
-							" "+Integer.toString(gold)+"\n";
+					String playerInfo = name + " "+xLocation+" "+yLocation
+							+" "+armor+" "+gold+"\n";
 					bw.write(playerInfo);
 					
 					int str = player.getStat("str");
@@ -56,7 +57,7 @@ public class AccountSaver implements Runnable {
 							Integer.toString(totalHealth)+"\n";
 					bw.write(stats);
 					
-					ArrayList<Item> equipment = player.getEquiped();
+					ArrayList<Item> equipment = player.getEquipped();
 					ArrayList<Item> inventory = player.getInventory();
 					ArrayList<String> keys = player.getKeys();
 					if (keys.isEmpty()){

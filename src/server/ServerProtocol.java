@@ -33,6 +33,7 @@ public class ServerProtocol {
 	public static String SERVER_INFO = "localhost";
 	public static final String INVALID_SYNTAX="Incorrect Syntax";
 	public static final String INVALID_TARGET="Invalid Target";
+	public static final int RESPAWN_TIME=30000;
 	
 	public enum Direction{
 		North, South, East, West
@@ -78,7 +79,7 @@ public class ServerProtocol {
 					return "You can't attack another adventurer!";
 				}
 				GameCharacter defender = (GameCharacter) defendObject;
-				Weapon attackingWeapon= (Weapon) player.getEquiped(Integer.parseInt(subparts[2]) - 1);
+				Weapon attackingWeapon= (Weapon) player.getEquipped(Integer.parseInt(subparts[2]) - 1);
 				int damage = determineAttack(player,defender,attackingWeapon);
 				
 				StringBuilder result = new StringBuilder();
@@ -87,7 +88,7 @@ public class ServerProtocol {
 				}
 				else{
 					result.append("You hit " +defender.getName()+ " for " +damage+ " points of damage.\n");
-					defender.dealDamage(damage);
+					defender.dealDamage(damage, map);
 				}
 				if(CommonFolk.class.isAssignableFrom(defendObject.getClass())){
 					CommonFolk npc = (CommonFolk) defendObject;
@@ -103,6 +104,11 @@ public class ServerProtocol {
 					}
 					else{
 						result.append(defender.getName()+ " attacked you for "+ npcDamage+ " points of damage");
+						player.dealDamage(npcDamage, map);
+			
+					}
+					if(!player.isAlive()){
+						result.append("\n"+defender.getName()+" killed you!\nYou have been respawned");
 					}
 				}				
 				return result.toString();
@@ -171,10 +177,17 @@ public class ServerProtocol {
 			if (subparts.length == 2){
 				int position = Integer.parseInt(subparts[1]) - 1;
 				List<GameObject> objects = map.checkForObjects(player);
-				if (objects.get(position).getGoldAmount() > 0){
-					sendback = objects.get(position).getInventory().toString() + " Gold=" +Integer.toString(objects.get(position).getGoldAmount());
+				GameObject obj = objects.get(position);
+				if(GameCharacter.class.isAssignableFrom(obj.getClass())){
+					GameCharacter character = (GameCharacter) obj;
+					if(character.isAlive()){
+						return "They aren't going to let you just look through their things!";
+					}
+				}
+				if (obj.getGoldAmount() > 0){
+					sendback = obj.getInventory().toString() + " Gold=" +Integer.toString(objects.get(position).getGoldAmount());
 				} else {
-					sendback = objects.get(position).getInventory().toString();
+					sendback = obj.getInventory().toString();
 				}
 				return sendback;
 			} 
@@ -198,16 +211,25 @@ public class ServerProtocol {
 					return shop.getWaresString();
 				}
 			}
-			return map.checkForObjects(player).toString();
-			
+			else if(subparts.length == 1){
+				return map.checkForObjects(player).toString();
+			}
+			return INVALID_SYNTAX;
 		case "take":
 			if (subparts.length == 3){
 				int containerPosition = Integer.parseInt(subparts[1]) - 1;
 				int itemPosition = Integer.parseInt(subparts[2]) - 1;
 				List<GameObject> objects = map.checkForObjects(player);
 				try{
-					Item chosenItem = objects.get(containerPosition).getInventory().get(itemPosition);
-					objects.get(containerPosition).removeFromInventory(chosenItem);
+					GameObject obj = objects.get(containerPosition);
+					if(GameCharacter.class.isAssignableFrom(obj.getClass())){
+						GameCharacter character = (GameCharacter) obj;
+						if(character.isAlive()){
+							return "They don't want to give that to you.";
+						}
+					}
+					Item chosenItem = obj.getInventory().get(itemPosition);
+					obj.removeFromInventory(chosenItem);
 					player.addToInventory(chosenItem);
 					return  update(player,chosenItem.toString()+" added to Inventory");
 				} catch (IndexOutOfBoundsException e){
@@ -240,7 +262,7 @@ public class ServerProtocol {
 					return INVALID_TARGET;
 				}
 			}
-			if(folk==null){
+			if(folk==null||!folk.isAlive()){
 				return INVALID_TARGET;
 			}
 			return folk.talk(player);

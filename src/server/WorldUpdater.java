@@ -9,7 +9,7 @@ import characters.Container;
 import gameMap.GameMap;
 import items.Gold;
 import items.Weapon;
-import items.weaponGenerator;
+import items.WeaponGenerator;
 
 public class WorldUpdater implements Runnable {
 
@@ -33,7 +33,7 @@ public class WorldUpdater implements Runnable {
 				e.printStackTrace();
 			}
 			for (Entry<Container, Point> container : this.containers.entrySet()) {
-				if (container.getKey().isEmpy()){
+				if (container.getKey().isEmpty()){
 					refillContainer(container.getKey());
 				}
 			}
@@ -46,7 +46,7 @@ public class WorldUpdater implements Runnable {
 		Random ranGen = new Random();
 		switch(level){
 		case 1:
-			Weapon sword = weaponGenerator.createWeapon(3);
+			Weapon sword = WeaponGenerator.createWeapon(3);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(2)+1;
@@ -54,7 +54,7 @@ public class WorldUpdater implements Runnable {
 			}
 			break;
 		case 6:
-			sword = weaponGenerator.createWeapon(6);
+			sword = WeaponGenerator.createWeapon(6);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(4)+1;
@@ -62,7 +62,7 @@ public class WorldUpdater implements Runnable {
 			}
 			break;
 		case 9:
-			sword = weaponGenerator.createWeapon(9);
+			sword = WeaponGenerator.createWeapon(9);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(9)+2;
@@ -70,7 +70,7 @@ public class WorldUpdater implements Runnable {
 			}
 			break;
 		case 12:
-			sword = weaponGenerator.createWeapon(12);
+			sword = WeaponGenerator.createWeapon(12);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(12)+4;
@@ -78,7 +78,7 @@ public class WorldUpdater implements Runnable {
 			}
 			break;
 		default:
-			sword = weaponGenerator.createWeapon(1);
+			sword = WeaponGenerator.createWeapon(1);
 			container.addToInventory(sword);
 			if (container.containGold()){
 				int goldAmount = ranGen.nextInt(2)+1;

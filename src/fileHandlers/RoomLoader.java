@@ -20,13 +20,12 @@ public class RoomLoader {
 				Room r = new Room(new ArrayList<Rectangle>());
 				String[] blocks = lineRead.split(";");
 				for(String b : blocks){
-					System.out.println(b);
 					String[] coord = b.split(" ");
 					int x = Integer.parseInt(coord[0]);
 					int y = Integer.parseInt(coord[1]);
-					int width = Integer.parseInt(coord[2])-x;
-					int height = Integer.parseInt(coord[3])-y;
-					
+					int width = Integer.parseInt(coord[2])-x+1;
+					int height = Integer.parseInt(coord[3])-y+1;
+
 					Rectangle rect =new Rectangle(x, y, width, height);
 					r.addBlock(rect);
 					lineRead = br.readLine();

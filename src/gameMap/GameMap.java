@@ -56,22 +56,6 @@ public class GameMap {
 	public boolean moveByDistance(GameCharacter character, Direction dir, int distance){
 		Point charLocation = character.getLocation();
 		Point moveToLocation = null;
-//		switch(dir){
-//			case North:
-//				moveToLocation.setLocation(charLocation.x, distance+charLocation.y);
-//				break;
-//			case South:
-//				moveToLocation.setLocation(charLocation.x, charLocation.y-distance);
-//				break;
-//			case East:
-//				moveToLocation.setLocation(charLocation.x+distance, charLocation.y);
-//				break;
-//			case West:
-//				moveToLocation.setLocation(charLocation.x-distance, charLocation.y);
-//				break;
-//			default:
-//				return false;
-//		}
 		
 		Point currentLocation = charLocation;
 		for(int counter =0; counter<distance;counter++){
@@ -128,12 +112,14 @@ public class GameMap {
 	
 	public List<GameObject> checkInRoom(Room room){
 		List<GameObject> objects = new ArrayList<>();
-		for(Rectangle r : room.getBlocks()){
-			for(double i = r.getX(); i<r.getWidth(); i++){
-				for(double j = r.getY(); j<r.getHeight(); j++){
-					List<GameObject> current = this.objectMap.get(new Point((int) i, (int)j));
-					if(current!=null){
-						objects.addAll(current);
+		if(room!=null){
+			for(Rectangle r : room.getBlocks()){
+				for(double i = r.getX(); i<r.getWidth(); i++){
+					for(double j = r.getY(); j<r.getHeight(); j++){
+						List<GameObject> current = this.objectMap.get(new Point((int) i, (int)j));
+						if(current!=null){
+							objects.addAll(current);
+						}
 					}
 				}
 			}

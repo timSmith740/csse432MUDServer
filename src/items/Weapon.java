@@ -23,7 +23,7 @@ public class Weapon extends Equipment {
 	}
 	
 	public int getRange(){
-		return range;
+		return this.range;
 	}
 	
 	public int getDamage(GameCharacter character){
@@ -31,7 +31,7 @@ public class Weapon extends Equipment {
 //		System.out.println(character.getStat("dex")+" "+character.getStat("str")+" "+character.getStat("intel"));
 //		int damage =getMin(this.str,character.getStat("str"))+getMin(this.dex,character.getStat("dex"))+getMin(this.intel,character.getStat("intel"));
 //		return damage;
-		switch(type){
+		switch(this.type){
 		case 2: return getMin(this.damage,character.getStat("dex"));
 		case 3: return getMin(this.damage,character.getStat("intel"));
 		case 4: return getMin(this.damage,character.getStat("str"));
@@ -52,6 +52,7 @@ public class Weapon extends Equipment {
 		return this.hit;
 	}
 	
+	@Override
 	public String toString(){
 		return this.name+": "+this.damage;
 	}
@@ -66,6 +67,10 @@ public class Weapon extends Equipment {
 	
 	public int getWeaponType(){
 		return this.type;
+	}
+
+	public Weapon copyWeapon() {
+		return new Weapon(this.damage, this.type, this.range, this.hit,this.level, this.name);
 	}
 
 }

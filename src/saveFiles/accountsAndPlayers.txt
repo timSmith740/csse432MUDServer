@@ -1,12 +1,6 @@
-a a
-a's corpse 2 2 1 1
-5 5 2 2 1 0 1
+weis autumn
+Raistlin 2 2 1 1
+1 1 1 1 1 1 1
 
 
-
-b b
-b's corpse 2 2 1 1
-2 2 5 1 2 0 1
-
-
-
+Atlatl:7:2:3:4:3 Scimitar:7:3:1:0:1 Axe:7:3:1:0:1  

@@ -21,7 +21,7 @@ import fileHandlers.RoomLoader;
 import fileHandlers.WorldLoader;
 import gameMap.GameMap;
 import gameMap.Room;
-import items.weaponGenerator;
+import items.WeaponGenerator;
 import worldObjects.WorldObject;
 
 
@@ -72,13 +72,17 @@ public class Server {
 		dialogue.add("What's up");
 		dialogue.add("Hello");
 		
-		CommonFolk wilkin = new CommonFolk("Wilkin", dialogue, weaponGenerator.createWeapon(1));
-		wilkin.setStats(1, 1, 1, 1);
-		ShopKeeper sid = new ShopKeeper("Sid", dialogue, weaponGenerator.createWeapon(1));
+		CommonFolk wilkin = new CommonFolk("Wilkin", dialogue, WeaponGenerator.createWeapon(1));
+		wilkin.setStats(10, 10, 10, 10);
+		ShopKeeper sid = new ShopKeeper("Sid", dialogue, WeaponGenerator.createWeapon(1));
 		sid.setStats(1, 1, 1, 1);
-		this.theWorld.AddGameObjectAtLocation(wilkin, new Point(2, 3));
-		this.theWorld.AddGameObjectAtLocation(sid, new Point(2, 3));
-		sid.addWares(weaponGenerator.createWeapon(1), 1);
+		Point location = new Point(2, 3);
+		this.theWorld.AddGameObjectAtLocation(wilkin, location);
+		wilkin.setRespawnLocation(location);
+		
+		this.theWorld.AddGameObjectAtLocation(sid, location);
+		sid.setRespawnLocation(location);
+		sid.addWares(WeaponGenerator.createWeapon(5), 1);
 	}
 	
 

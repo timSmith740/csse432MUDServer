@@ -6,6 +6,9 @@ public class Player extends GameCharacter {
 	
 	private Account account;
 
+	public Player(){
+		this.respawnTime = 500;
+	}
 	
 	public void deleteInventory(){
 		this.inventory.clear();

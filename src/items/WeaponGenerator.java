@@ -2,7 +2,7 @@ package items;
 
 import java.util.Random;
 
-public class weaponGenerator {
+public class WeaponGenerator {
 
 
 

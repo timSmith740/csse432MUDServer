@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 import items.Gold;
 import items.Item;
+import server.ServerProtocol;
 
 public abstract class GameObject {
 
-	protected int respawnTime;
+	protected int respawnTime = ServerProtocol.RESPAWN_TIME;
 	protected String name;
-	protected Point respawnLocation;
+	protected Point respawnLocation = new Point(1, 1);
 	protected Point location;
 	protected ArrayList<Item> inventory = new ArrayList<>();
 	protected int armor;
@@ -47,7 +48,6 @@ public abstract class GameObject {
 		else{
 			this.inventory.add(item);
 		}
-		//this.Inventory.add(item);
 	}
 	
 	public void removeFromInventory(Item item){
@@ -64,7 +64,7 @@ public abstract class GameObject {
 	}
 	
 	//joe
-	public Item getEquiped(int index){
+	public Item getEquipped(int index){
 		return this.equipped.get(index);
 	}
 	
@@ -82,6 +82,12 @@ public abstract class GameObject {
 		}else{
 			this.location=new Point(location.x, location.y);
 		}
+	}
+	public Point getRespawnLocation() {
+		return this.respawnLocation;
+	}
+	public void setRespawnLocation(Point location){
+		this.respawnLocation = location;
 	}
 	public int getGoldAmount(){
 		return this.gold.getAmount();
@@ -106,7 +112,6 @@ public abstract class GameObject {
 	}
 
 	public int getArmor() {
-		// TODO Auto-generated method stub
 		return this.armor;
 	}
 	public void setArmor(int value){
@@ -117,7 +122,7 @@ public abstract class GameObject {
 		return this.getName();
 	}
 	
-	public ArrayList<Item> getEquiped(){
+	public ArrayList<Item> getEquipped(){
 		return this.equipped;
 	}
 }

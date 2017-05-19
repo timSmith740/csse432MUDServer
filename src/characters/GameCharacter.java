@@ -2,7 +2,10 @@ package characters;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import gameMap.GameMap;
 import items.Equipment;
 import items.Weapon;
 
@@ -14,7 +17,7 @@ public abstract class GameCharacter extends GameObject{
 	public int armor=0;
 	public int health=0;
 	public int totalHealth=1;
-	ArrayList<String> keys = new ArrayList<String>();
+	ArrayList<String> keys = new ArrayList<>();
 	public GameCharacter() {
 		super("Player");
 	}
@@ -46,6 +49,8 @@ public abstract class GameCharacter extends GameObject{
 				break;
 			case "con":
 				this.con = val;
+				this.health = 10+2*this.con;
+				this.totalHealth = 10+2*this.con;
 				break;
 			case "intel":
 				this.intel = val;
@@ -93,8 +98,12 @@ public abstract class GameCharacter extends GameObject{
 		this.totalHealth = value;
 	}
 	
-	public void dealDamage(int value){
+	public void dealDamage(int value, GameMap map){
 		this.health -= value;
+		if(this.health<=0){
+			Timer timer = new Timer();
+			timer.schedule(new RespawnChar(this, map),this.respawnTime);
+		}
 	}
 	
 	public boolean isAlive(){
@@ -104,13 +113,31 @@ public abstract class GameCharacter extends GameObject{
 	public Weapon getWeapon() {
 		return this.weapon;
 	}
-	
+
 	@Override
-	public String getName() {
+	public String toString(){
 		if(!this.isAlive()){
-			return this.name+"'s corpse";
+			return this.getName()+"'s corpse";
 		}
-		return this.name;
+		return this.getName();
+	}
+	
+	public void respawn(GameMap map){
+		setCurrentHealth(this.totalHealth);
+		map.AddGameObjectAtLocation(this, this.respawnLocation);
+	}
+	
+	class RespawnChar extends TimerTask {
+		private GameCharacter character;
+		private GameMap map;
+		public RespawnChar(GameCharacter character, GameMap map){
+			this.character = character;
+			this.map = map;
+		}
+		@Override
+		public void run() {
+			this.character.respawn(this.map);
+		}
 	}
 	
 }
