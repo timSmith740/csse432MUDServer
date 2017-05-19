@@ -17,7 +17,7 @@ public class Container extends GameObject {
 	}
 	
 	public boolean isEmpy(){
-		return this.Inventory.isEmpty();
+		return this.inventory.isEmpty();
 	}
 	
 	public int getLevel(){

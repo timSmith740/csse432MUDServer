@@ -8,17 +8,15 @@ import items.Item;
 
 public abstract class GameObject {
 
-	int respawnTime;
-	String name;
-	Point respawnLocation;
-	Point location;
-	ArrayList<Item> Inventory = new ArrayList<Item>();
-	int armor;
-	Gold gold;
+	protected int respawnTime;
+	protected String name;
+	protected Point respawnLocation;
+	protected Point location;
+	protected ArrayList<Item> inventory = new ArrayList<>();
+	protected int armor;
+	protected Gold gold;
 
-	
-	//Joe  
-	ArrayList<Item> Equiped = new ArrayList<Item>();
+	ArrayList<Item> equipped = new ArrayList<>();
 	
 	public GameObject(String name){
 		this.armor=1;
@@ -39,16 +37,15 @@ public abstract class GameObject {
 	}
 	
 	public ArrayList<Item> getInventory(){
-		return this.Inventory;
+		return this.inventory;
 	}
-	
 	
 	public void addToInventory(Item item){
 		if(item.getClass().equals(Gold.class)){
 			this.gold.add((Gold) item);
 		}
 		else{
-			this.Inventory.add(item);
+			this.inventory.add(item);
 		}
 		//this.Inventory.add(item);
 	}
@@ -58,21 +55,21 @@ public abstract class GameObject {
 			this.gold.subtract((Gold) item);
 		}
 		else{
-			this.Inventory.remove(item);
+			this.inventory.remove(item);
 		}
 	}
 	
 	public void addToEquipment(Item item){
-		this.Equiped.add(item);
+		this.equipped.add(item);
 	}
 	
 	//joe
 	public Item getEquiped(int index){
-		return this.Equiped.get(index);
+		return this.equipped.get(index);
 	}
 	
 	public void removeFromEquipment(Item item){
-		this.Equiped.remove(item);
+		this.equipped.remove(item);
 	}
 
 	public Point getLocation(){
@@ -93,8 +90,8 @@ public abstract class GameObject {
 	//Joe Method
 	public String getInvString(){
 		String result = "";
-		for(int counter=0; counter<this.Inventory.size(); counter++){
-			result = result + this.Inventory.get(counter)+ "\n";
+		for(int counter=0; counter<this.inventory.size(); counter++){
+			result = result + this.inventory.get(counter)+ "\n";
 		}
 		return result;
 	}
@@ -102,8 +99,8 @@ public abstract class GameObject {
 	//Joe Method
 	public String getEquString(){
 		String result = "";
-		for(int counter=0; counter<this.Equiped.size(); counter++){
-			result = result + this.Equiped.get(counter)+ "\n";
+		for(int counter=0; counter<this.equipped.size(); counter++){
+			result = result + this.equipped.get(counter)+ "\n";
 		}
 		return result;
 	}
@@ -121,7 +118,7 @@ public abstract class GameObject {
 	}
 	
 	public ArrayList<Item> getEquiped(){
-		return this.Equiped;
+		return this.equipped;
 	}
 }
  

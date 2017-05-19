@@ -6,6 +6,7 @@ public class Account {
 	String username;
 	String password;
 	Player character;
+	ClientHandler handler;
 	
 	public Account(){
 		
@@ -25,11 +26,11 @@ public class Account {
 	}
 	
 	public String getUsername(){
-		return username;
+		return this.username;
 	}
 	
 	public String getPass(){
-		return password;
+		return this.password;
 	}
 	
 	public void addPass(String pass){
@@ -38,5 +39,13 @@ public class Account {
 	
 	public void addUser(String user){
 		this.username = user;
+	}
+	public void messageClient(String message){
+		if(this.handler!=null){
+			this.handler.chatMessage(message);
+		}
+	}
+	public void setHandler(ClientHandler handler){
+		this.handler=handler;
 	}
 }

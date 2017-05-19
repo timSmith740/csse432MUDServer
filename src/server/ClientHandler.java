@@ -1,6 +1,5 @@
 package server;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,9 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import characters.Player;
-import fileHandlers.WorldLoader;
 import gameMap.GameMap;
-import worldObjects.WorldObject;
 
 
 
@@ -26,37 +23,35 @@ import worldObjects.WorldObject;
 public class ClientHandler implements Runnable {
 	Server myServer;
 	Socket mySocket;
+	Socket chatSocket;
 	OutputStream out;
 	InputStream in;
+	OutputStream chatOut;
 	public Player player;
 	GameMap theWorld;
-	Boolean loggedIn;
-	Boolean registering;
+	boolean loggedIn;
+	boolean registering;
 	Account currentUser;
 	ArrayList<Account> users;
 	ArrayList<Account> loggedOn;
 	ArrayList<Account> loggedOff;
 	HashMap<String, String> accounts;
 	
-	public ClientHandler(Server theServer, Socket theSocket,GameMap theWorld, ArrayList<Account> theUsers, 
-			HashMap<String, String> theAccounts, ArrayList<Account> loggedOn, ArrayList<Account> loggedOff) throws IOException{
+	public ClientHandler(Server theServer, Socket theSocket, Socket chatSocket) throws IOException{
 		this.myServer=theServer;
 		this.mySocket= theSocket;
 		this.in = this.mySocket.getInputStream();
 		this.out =this.mySocket.getOutputStream();
 		this.player = new Player();
-		this.theWorld= theWorld;
+		this.theWorld= theServer.getTheWorld();
 		this.loggedIn = false;
 		this.registering = false;
-		this.users = theUsers;
-		this.accounts = theAccounts;
-		this.loggedOff = loggedOff;
-		this.loggedOn = loggedOn;
-		
-		//Temporarly 
-		//Point startingPoint = new Point(2,2);
-		//this.theWorld.AddGameObjectAtLocation(player, startingPoint);
-		
+		this.users = theServer.getUsers();
+		this.accounts = theServer.getAccounts();
+		this.loggedOff = theServer.getLoggedOff();
+		this.loggedOn = theServer.getLoggedOn();
+		this.chatSocket = chatSocket;
+		this.chatOut = this.chatSocket.getOutputStream();
 	
 	}
 	
@@ -87,9 +82,10 @@ public class ClientHandler implements Runnable {
 					String user = command.split(" ")[4];
 					Account foundAccount = ServerProtocol.findAccount(user, this.users);
 					this.currentUser = foundAccount;
+					this.currentUser.setHandler(this);
 					this.loggedOn.add(this.currentUser);
 					this.loggedOff.remove(this.currentUser);
-					String myString = ServerProtocol.update(player,"Logged on");
+					String myString = ServerProtocol.update(this.player,"Logged on");
 					this.out.write(myString.getBytes());
 					break command;
 				}
@@ -107,11 +103,12 @@ public class ClientHandler implements Runnable {
 						System.out.println(foundAccount);
 						this.player = foundAccount.getCharacter();
 						this.currentUser = foundAccount;
+						this.currentUser.setHandler(this);
 						this.loggedOn.add(this.currentUser);
 						this.loggedOff.remove(this.currentUser);
 					}
-					String registering = result.split(" ")[0];
-					if (registering.equals("Registered.")){
+					String registerString = result.split(" ")[0];
+					if (registerString.equals("Registered.")){
 						this.loggedIn = false;
 						this.registering = true;
 					}
@@ -126,6 +123,9 @@ public class ClientHandler implements Runnable {
 					System.out.println("Closing Connection To: "+ this.mySocket.getRemoteSocketAddress());
 					try{
 						this.mySocket.close();
+						this.chatOut.write("quit".getBytes());
+						this.chatSocket.close();
+						this.currentUser.setHandler(null);
 						this.loggedOff.add(this.currentUser);
 						this.loggedOn.remove(this.currentUser);
 						break;
@@ -142,6 +142,15 @@ public class ClientHandler implements Runnable {
 			
 		}
 
+	}
+
+	public void chatMessage(String message) {
+		try {
+			this.chatOut.write(message.getBytes());
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+		
 	}
 
 }

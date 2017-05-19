@@ -29,6 +29,7 @@ public class ServerProtocol {
 
 
 	public static int DEFAULT_PORT = 5555;
+	public static int CHAT_PORT = 5556;
 	public static String SERVER_INFO = "localhost";
 	public static final String INVALID_SYNTAX="Incorrect Syntax";
 	public static final String INVALID_TARGET="Invalid Target";
@@ -270,6 +271,22 @@ public class ServerProtocol {
 				return shop.purchaseItem(subparts[2], player);
 			}
 			return INVALID_SYNTAX;
+		case "chat":
+			StringBuilder sb = new StringBuilder();
+			sb.append(": \"");
+			sb.append(command.substring(subparts[0].length()+1));
+			sb.append("\"");
+			
+			List<GameObject> recipients = map.checkCurrentRoom(player);
+			recipients.remove(player);
+			for(GameObject o : recipients){
+				if(Player.class.isAssignableFrom(o.getClass())){
+					Player otherPlayer = (Player) o;
+					otherPlayer.hear(player.getName()+sb.toString());
+				}
+			}
+			return "YOU"+ sb.toString() ;
+			
 		default:
 			return(ServerProtocol.INVALID_SYNTAX);
 		}
@@ -364,6 +381,7 @@ public class ServerProtocol {
 			return(null);
 		}
 		foundAccount.addCharacter(character);
+		character.setAccount(foundAccount);
 		
 		// REMOVE LATER
 		character.addToInventory(new Gold(1));

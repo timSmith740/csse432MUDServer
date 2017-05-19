@@ -32,7 +32,7 @@ import worldObjects.WorldObject;
  * Main class for creating a server
  */
 public class Server {
-	int Port;
+	int port;
 	private ServerSocket mySocket;
 	GameMap theWorld;
 	ArrayList<Account> users;
@@ -40,10 +40,13 @@ public class Server {
 	Map<Container, Point> containers;
 	ArrayList<Account> loggedOn;
 	ArrayList<Account> loggedOff;
+	private ServerSocket chatSocket;
+	private int chatPort;
 	
 	
-	public Server(int Port){
-		this.Port=Port;
+	public Server(int port, int chatPort){
+		this.port=port;
+		this.chatPort = chatPort;
 		//Load world
 		WorldLoader loader = new WorldLoader();
 		WorldObject[][] world = loader.readFile();
@@ -78,17 +81,19 @@ public class Server {
 		sid.addWares(weaponGenerator.createWeapon(1), 1);
 	}
 	
+
 	public void execute(){
 		//Connect to server
 		try{
-			mySocket = new ServerSocket(Port);
+			this.mySocket = new ServerSocket(this.port);
+			this.chatSocket = new ServerSocket(this.chatPort);
 			WorldUpdater updater = new WorldUpdater(this.theWorld, this.containers);
 			Thread updateRunner = new Thread(updater);
 			updateRunner.start();
 			AccountSaver saver = new AccountSaver(this.users);
 			Thread accountSaver = new Thread(saver);
 			accountSaver.start();
-			System.out.println("Server running on port: "+Port);
+			System.out.println("Server running on port: "+this.port);
 		}catch(Exception e){
 			e.printStackTrace();
 			return;
@@ -98,7 +103,8 @@ public class Server {
 			
 			try {
 				Socket client = this.mySocket.accept();
-				ClientHandler myHandler = new ClientHandler(this, client,this.theWorld, this.users, this.accounts, this.loggedOn, this.loggedOff);
+				Socket clientChat = this.chatSocket.accept();
+				ClientHandler myHandler = new ClientHandler(this, client, clientChat);
 				Thread runner = new Thread(myHandler);
 				runner.start();
 			} catch (IOException e) {
@@ -107,5 +113,24 @@ public class Server {
 			}
 			
 		}
+	}
+	public GameMap getTheWorld() {
+		return this.theWorld;
+	}
+
+	public ArrayList<Account> getUsers() {
+		return this.users;
+	}
+
+	public HashMap<String, String> getAccounts() {
+		return this.accounts;
+	}
+
+	public ArrayList<Account> getLoggedOn() {
+		return this.loggedOn;
+	}
+
+	public ArrayList<Account> getLoggedOff() {
+		return this.loggedOff;
 	}
 }

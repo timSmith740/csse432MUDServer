@@ -1,17 +1,22 @@
 package characters;
 
-import java.util.ArrayList;
+import server.Account;
 
 public class Player extends GameCharacter {
 	
-	//joe Method
-	public Player(){
-	}
-	
-	
+	private Account account;
+
 	
 	public void deleteInventory(){
-		Inventory.clear();
+		this.inventory.clear();
+	}
+	public void hear(String message){
+		if(this.account!=null){
+			this.account.messageClient(message);
+		}
+	}
+	public void setAccount(Account account){
+		this.account=account;
 	}
 	
 	public void increaseStat(String stat){
@@ -24,10 +29,14 @@ public class Player extends GameCharacter {
 				break;
 			case "con":
 				this.con++;
+				this.health+=2;
+				this.totalHealth+=2;
 				break;
 			case "intel":
 				this.intel++;
 				break;
+			default:
+				System.out.println(stat +" is not a stat");
 		}
 	}
 }
