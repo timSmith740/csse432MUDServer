@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import characters.Player;
-import fileHandlers.worldLoader;
+import fileHandlers.WorldLoader;
 import gameMap.GameMap;
 import worldObjects.WorldObject;
 

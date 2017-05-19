@@ -7,7 +7,7 @@ import java.io.IOException;
 import worldObjects.WorldObject;
 import worldObjects.Obstacle;
 
-public class worldLoader {
+public class WorldLoader {
 
 	public WorldObject[][] readFile(){
 		WorldObject[][] map = new WorldObject[48][60];

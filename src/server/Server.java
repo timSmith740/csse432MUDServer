@@ -18,7 +18,7 @@ import fileHandlers.AccountLoader;
 import fileHandlers.AccountSaver;
 import fileHandlers.ContainerLoader;
 import fileHandlers.DoorLoader;
-import fileHandlers.worldLoader;
+import fileHandlers.WorldLoader;
 import gameMap.GameMap;
 import gameMap.Room;
 import items.weaponGenerator;
@@ -45,7 +45,7 @@ public class Server {
 	public Server(int Port){
 		this.Port=Port;
 		//Load world
-		worldLoader loader = new worldLoader();
+		WorldLoader loader = new WorldLoader();
 		WorldObject[][] theWorld = loader.readFile();
 		DoorLoader doorLoader = new DoorLoader(theWorld);
 		doorLoader.lockDoors();

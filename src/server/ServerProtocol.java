@@ -79,9 +79,7 @@ public class ServerProtocol {
 				//return objects.get(position).getInventory().toString();
 			}
 			return(ServerProtocol.INVALID_SYNTAX);
-
-		
-			
+	
 		case "run":
 			if(subparts.length==2){
 			String sendback = "run:"+subparts[1];
